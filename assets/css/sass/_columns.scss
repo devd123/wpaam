@@ -1,0 +1,101 @@
+.wpaam_one_half, .wpaam_one_third, .wpaam_two_third, .wpaam_two_fourth, .wpaam_three_fourth, .wpaam_one_fourth, .wpaam_one_fifth, .wpaam_two_fifth, .wpaam_three_fifth, .wpaam_four_fifth, .wpaam_one_sixth, .wpaam_five_sixth {
+    position: relative;
+    margin-right: 4%;
+    float: left;
+}
+
+.wpaam_one_half {
+    width: 48%;
+}
+
+.wpaam_one_third {
+    width: 30.6666%;
+}
+
+.wpaam_two_third {
+    width: 65.3332%;
+}
+
+.wpaam_one_fourth {
+    width: 22%;
+}
+
+.wpaam_two_fourth {
+    width: 48%;
+}
+
+.wpaam_three_fourth {
+    width: 74%;
+}
+
+.wpaam_one_fifth {
+    width: 16.8%;
+}
+
+.wpaam_two_fifth {
+    width: 37.6%;
+}
+
+.wpaam_three_fifth {
+    width: 58.4%;
+}
+
+.wpaam_four_fifth {
+    width: 79.2%;
+}
+
+.wpaam_one_sixth {
+    width: 13.3333%;
+}
+
+.wpaam_two_sixth {
+    width: 30.6666%;
+}
+
+.wpaam_three_sixth {
+    width: 47.9998%;
+}
+
+.wpaam_four_sixth {
+    width: 65.3332%;
+}
+
+.wpaam_five_sixth {
+    width: 82.6665%;
+}
+
+.last {
+    margin-right: 0 !important;
+    clear: right;
+}
+/* Two level columns
+---------------------------------------------------------- */
+.wpaam_one_half .wpaam_one_half {
+    margin-right: 8.3333%;
+    width: 45.8333%;
+}
+
+.wpaam_one_half .wpaam_one_third {
+    margin-right: 8.3333%;
+    width: 27.7778%;
+}
+
+.wpaam_one_half .wpaam_two_third {
+    margin-right: 8.3333%;
+    width: 63.8889%;
+}
+
+.wpaam_two_third .wpaam_one_third {
+    margin-right: 6.1224%;
+    width: 29.2517%;
+}
+
+.wpaam_two_third .wpaam_two_third {
+    margin-right: 6.1224%;
+    width: 64.6258%;
+}
+
+.wpaam_two_third .wpaam_one_fourth {
+    margin-right: 6.1224%;
+    width: 20.4082%;
+}

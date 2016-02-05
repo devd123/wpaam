@@ -1,0 +1,628 @@
+/**
+ * WP User Manager
+ * http://wp-user-manager.com
+ *
+ * Copyright (c) 2015 Alessandro Tesoro
+ * Licensed under the GPLv2+ license.
+ */
+.wpaam_one_half, .wpaam_one_third, .wpaam_two_third, .wpaam_two_fourth, .wpaam_three_fourth, .wpaam_one_fourth, .wpaam_one_fifth, .wpaam_two_fifth, .wpaam_three_fifth, .wpaam_four_fifth, .wpaam_one_sixth, .wpaam_five_sixth {
+  position: relative;
+  margin-right: 4%;
+  float: left; }
+
+.wpaam_one_half {
+  width: 48%; }
+
+.wpaam_one_third {
+  width: 30.6666%; }
+
+.wpaam_two_third {
+  width: 65.3332%; }
+
+.wpaam_one_fourth {
+  width: 22%; }
+
+.wpaam_two_fourth {
+  width: 48%; }
+
+.wpaam_three_fourth {
+  width: 74%; }
+
+.wpaam_one_fifth {
+  width: 16.8%; }
+
+.wpaam_two_fifth {
+  width: 37.6%; }
+
+.wpaam_three_fifth {
+  width: 58.4%; }
+
+.wpaam_four_fifth {
+  width: 79.2%; }
+
+.wpaam_one_sixth {
+  width: 13.3333%; }
+
+.wpaam_two_sixth {
+  width: 30.6666%; }
+
+.wpaam_three_sixth {
+  width: 47.9998%; }
+
+.wpaam_four_sixth {
+  width: 65.3332%; }
+
+.wpaam_five_sixth {
+  width: 82.6665%; }
+
+.last {
+  margin-right: 0 !important;
+  clear: right; }
+
+/* Two level columns
+---------------------------------------------------------- */
+.wpaam_one_half .wpaam_one_half {
+  margin-right: 8.3333%;
+  width: 45.8333%; }
+
+.wpaam_one_half .wpaam_one_third {
+  margin-right: 8.3333%;
+  width: 27.7778%; }
+
+.wpaam_one_half .wpaam_two_third {
+  margin-right: 8.3333%;
+  width: 63.8889%; }
+
+.wpaam_two_third .wpaam_one_third {
+  margin-right: 6.1224%;
+  width: 29.2517%; }
+
+.wpaam_two_third .wpaam_two_third {
+  margin-right: 6.1224%;
+  width: 64.6258%; }
+
+.wpaam_two_third .wpaam_one_fourth {
+  margin-right: 6.1224%;
+  width: 20.4082%; }
+
+.wpaam-registration-form .fieldset-comments, .wpaam-registration-form .wpaam-honeypot-field {
+  display: none !important; }
+
+.wpaam-clearfix {
+  zoom: 1; }
+  .wpaam-clearfix:before, .wpaam-clearfix:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    visibility: hidden; }
+  .wpaam-clearfix:after {
+    clear: both; }
+
+.wpaam-user-details img {
+  padding: 5px;
+  border-radius: 999px;
+  border: 1px solid #eee;
+  background: #fff;
+  box-shadow: none;
+  max-width: 100%;
+  height: auto; }
+
+.wpaam-single-profile .wpaam-user-details {
+  background: #f5f5f5;
+  border: 1px solid #ccc;
+  padding: 20px 25px; }
+.wpaam-single-profile .wpaam-user-links {
+  margin: 15px 0px 10px 0px;
+  padding: 0px; }
+  .wpaam-single-profile .wpaam-user-links li {
+    list-style: none;
+    margin: 0px 10px 10px 0px; }
+    .wpaam-single-profile .wpaam-user-links li a {
+      border: solid 1px #cecccc;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      padding: 5px 10px 5px;
+      background: #fbfbfb;
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.17);
+      -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.17);
+      box-shadow: 0 0 1px rgba(0, 0, 0, 0.17); }
+      .wpaam-single-profile .wpaam-user-links li a:hover {
+        background: white; }
+.wpaam-single-profile .wpaam-user-display-name a {
+  text-decoration: none;
+  text-transform: capitalize;
+  font-weight: bold; }
+.wpaam-single-profile .wpaam-user-description p:last-child {
+  margin-bottom: 0px; }
+.wpaam-single-profile .wpaam-profile-tabs-content {
+  border: 1px solid #ccc;
+  border-top: none;
+  padding: 20px; }
+
+.wpaam-align-right {
+  text-align: right; }
+
+.wpaam-align-center {
+  text-align: center; }
+
+/* Profile Tabs */
+.wpaam-profile-tabs-holder, .wpaam-account-tabs {
+  background: #ddd;
+  border: 1px solid #ccc;
+  border-top: 0px; }
+  .wpaam-profile-tabs-holder ul, .wpaam-account-tabs ul {
+    width: 100%;
+    list-style: none;
+    margin: 0px;
+    padding: 0px; }
+    .wpaam-profile-tabs-holder ul li, .wpaam-account-tabs ul li {
+      display: inline-block;
+      margin: 0px; }
+      .wpaam-profile-tabs-holder ul li.active a, .wpaam-account-tabs ul li.active a {
+        background-color: #fff;
+        text-decoration: none;
+        margin-bottom: -1px;
+        border-bottom: 1px solid #fff; }
+        .wpaam-profile-tabs-holder ul li.active a:hover, .wpaam-account-tabs ul li.active a:hover {
+          background-color: #fff; }
+      .wpaam-profile-tabs-holder ul li a, .wpaam-account-tabs ul li a {
+        display: block;
+        padding: 5px 12px 5px;
+        line-height: 32px;
+        height: 32px;
+        outline: none; }
+        .wpaam-profile-tabs-holder ul li a:hover, .wpaam-account-tabs ul li a:hover {
+          background: #eaeaea;
+          text-decoration: none; }
+
+.wpaam-single-profile ul.wpaam-profile-tabs {
+  margin-bottom: 0px; }
+
+/* Profile details */
+.wpaam-single-profile .wpaam-user-details-list dl {
+  margin-left: 0px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px; }
+  .wpaam-single-profile .wpaam-user-details-list dl + h3.group-title {
+    margin-top: 30px; }
+.wpaam-single-profile .wpaam-user-details-list dl dt {
+  float: left;
+  font-weight: bold;
+  margin-right: 10px;
+  padding: 5px 5px 5px 0px;
+  width: 110px;
+  border-right: 2px solid #f6f6f6;
+  overflow: hidden;
+  clear: left;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+.wpaam-single-profile .wpaam-user-details-list dl dd {
+  margin: 2px 0;
+  padding: 5px 0; }
+  .wpaam-single-profile .wpaam-user-details-list dl dd span.wpaam-uploaded-file-name {
+    display: block; }
+.wpaam-single-profile .wpaam-user-details-list .group-title {
+  margin-top: 0;
+  margin-bottom: 1rem; }
+
+/* profile posts */
+.wpaam-single-profile .wpaam-post-meta {
+  margin: 0px;
+  padding: 0px; }
+  .wpaam-single-profile .wpaam-post-meta li {
+    list-style: none;
+    margin: 0px;
+    display: inline-block; }
+
+.wpaam-single-profile {
+  /* Profile comments tab */ }
+  .wpaam-single-profile .wpaam-post {
+    border-bottom: 2px solid #f6f6f6;
+    padding: 15px 0px; }
+    .wpaam-single-profile .wpaam-post:first-child {
+      padding-top: 0px; }
+  .wpaam-single-profile .wpaam-single-comment p {
+    border-bottom: 2px solid #f6f6f6;
+    margin: 0px;
+    padding: 15px 0px; }
+  .wpaam-single-profile .wpaam-single-comment:first-child p {
+    padding-top: 0px; }
+
+.wpaam-recent-users ul.wpaam-users-list {
+  list-style: none; }
+  .wpaam-recent-users ul.wpaam-users-list li {
+    margin: 0px;
+    padding: 0px; }
+
+/* Profile Card */
+.wpaam-profile-card {
+  text-align: center;
+  position: relative;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 70px 15px 30px 15px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1); }
+  .wpaam-profile-card .wpaam-profile-img {
+    position: absolute;
+    left: 50%;
+    border-radius: 999px;
+    margin-left: -48px;
+    top: -48px; }
+    .wpaam-profile-card .wpaam-profile-img img {
+      border-radius: 999px;
+      box-shadow: none;
+      padding: 5px;
+      background-color: #fff;
+      border: 1px solid #eee; }
+  .wpaam-profile-card a.wpaam-card-button {
+    border: 1px solid #cecccc;
+    background: #eee;
+    padding: 3px 12px 2px;
+    margin-bottom: -1px;
+    line-height: 32px;
+    height: 32px;
+    text-decoration: none;
+    outline: none;
+    -webkit-border-radius: 2px 2px 0 0;
+    -moz-border-radius: 2px 2px 0 0;
+    border-radius: 2px 2px 0 0;
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.17);
+    -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.17);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.17); }
+    .wpaam-profile-card a.wpaam-card-button:hover {
+      background: #fbfbfb; }
+  .wpaam-profile-card h4.wpaam-card-name {
+    margin-top: 0px; }
+
+.wpaam-profile-card ~ .wpaam-profile-card {
+  margin-top: 70px; }
+
+/* User Directory */
+div.wpaam-user-directory {
+  margin-bottom: 1em; }
+  div.wpaam-user-directory ul.wpaam-user-listings {
+    margin: 0; }
+
+ul.wpaam-user-listings {
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid #eee; }
+  ul.wpaam-user-listings li.wpaam-single-user {
+    list-style: none outside;
+    margin: 0;
+    border-bottom: 1px solid #eee;
+    display: block;
+    padding: 1em 1em 1em 2em;
+    overflow: hidden;
+    zoom: 1;
+    position: relative;
+    line-height: 1.5em;
+    text-decoration: none; }
+    ul.wpaam-user-listings li.wpaam-single-user:hover, ul.wpaam-user-listings li.wpaam-single-user:focus {
+      background-color: #fcfcfc; }
+    ul.wpaam-user-listings li.wpaam-single-user img.avatar {
+      width: 42px;
+      height: 42px;
+      position: absolute;
+      left: 1em;
+      float: left;
+      margin-right: 1em;
+      vertical-align: middle;
+      box-shadow: none; }
+    ul.wpaam-user-listings li.wpaam-single-user div.user, ul.wpaam-user-listings li.wpaam-single-user div.contact-meta, ul.wpaam-user-listings li.wpaam-single-user ul.meta {
+      -webkit-box-sizing: border-box;
+      /* Safari/Chrome, other WebKit */
+      -moz-box-sizing: border-box;
+      /* Firefox, other Gecko */
+      box-sizing: border-box;
+      /* Opera/IE 8+ */ }
+    ul.wpaam-user-listings li.wpaam-single-user div.user {
+      float: left;
+      width: 55%;
+      padding: 0 0 0 42px;
+      line-height: 1.5em; }
+      ul.wpaam-user-listings li.wpaam-single-user div.user h3 {
+        margin: 0;
+        padding: 0;
+        line-height: inherit;
+        font-size: inherit; }
+      ul.wpaam-user-listings li.wpaam-single-user div.user .description {
+        color: #999; }
+    ul.wpaam-user-listings li.wpaam-single-user div.contact-meta {
+      float: left;
+      text-align: left;
+      width: 25%;
+      padding: 0 0 0 1em;
+      color: #999;
+      line-height: 1.5em; }
+    ul.wpaam-user-listings li.wpaam-single-user .meta {
+      float: right;
+      text-align: right;
+      width: 20%;
+      padding: 0 0 0 1em;
+      margin: 0;
+      line-height: 1.5em;
+      color: #999;
+      list-style: none outside; }
+      ul.wpaam-user-listings li.wpaam-single-user .meta li {
+        list-style: none outside;
+        display: block;
+        margin: 0; }
+
+/* Directory Elements */
+.wpaam-directory-top-bar,
+.wpaam-directory-search-form {
+  padding: .5em 1em;
+  background: #f9f9f9;
+  border-top: 1px solid #e5e5e5; }
+  .wpaam-directory-top-bar div p,
+  .wpaam-directory-search-form div p {
+    margin: 0px; }
+
+.wpaam-directory-search-form {
+  padding: 1em; }
+  .wpaam-directory-search-form input {
+    width: 100%;
+    display: block; }
+  .wpaam-directory-search-form .form-fields,
+  .wpaam-directory-search-form .form-submit {
+    position: relative;
+    margin-right: 4%;
+    float: left; }
+  .wpaam-directory-search-form .form-fields {
+    width: 74%; }
+  .wpaam-directory-search-form .form-submit {
+    width: 22%;
+    margin-right: 0;
+    clear: right; }
+
+.wpaam-directory-pagination {
+  padding: .5em 1em;
+  background: #f9f9f9;
+  border-bottom: 1px solid #e5e5e5;
+  text-align: center; }
+  .wpaam-directory-pagination a.next {
+    float: right; }
+  .wpaam-directory-pagination a.prev {
+    float: left; }
+
+/* Form elements */
+.wpaam-profile-form fieldset,
+.wpaam-registration-form fieldset,
+.wpaam-password-form fieldset,
+.wpaam-update-password-form fieldset {
+  margin: 0 0 1em 0;
+  padding: 0 0 1em 0;
+  line-height: 2em;
+  border: 0;
+  border-bottom: 1px solid #eee; }
+  .wpaam-profile-form fieldset label,
+  .wpaam-registration-form fieldset label,
+  .wpaam-password-form fieldset label,
+  .wpaam-update-password-form fieldset label {
+    display: block;
+    margin: 0;
+    width: 29%;
+    float: left;
+    vertical-align: middle; }
+    .wpaam-profile-form fieldset label small,
+    .wpaam-registration-form fieldset label small,
+    .wpaam-password-form fieldset label small,
+    .wpaam-update-password-form fieldset label small {
+      opacity: .75;
+      font-size: 0.83em; }
+  .wpaam-profile-form fieldset div.field,
+  .wpaam-registration-form fieldset div.field,
+  .wpaam-password-form fieldset div.field,
+  .wpaam-update-password-form fieldset div.field {
+    width: 70%;
+    float: right;
+    vertical-align: middle; }
+  .wpaam-profile-form fieldset input.input-text, .wpaam-profile-form fieldset input.input-email, .wpaam-profile-form fieldset textarea, .wpaam-profile-form fieldset select,
+  .wpaam-registration-form fieldset input.input-text,
+  .wpaam-registration-form fieldset input.input-email,
+  .wpaam-registration-form fieldset textarea,
+  .wpaam-registration-form fieldset select,
+  .wpaam-password-form fieldset input.input-text,
+  .wpaam-password-form fieldset input.input-email,
+  .wpaam-password-form fieldset textarea,
+  .wpaam-password-form fieldset select,
+  .wpaam-update-password-form fieldset input.input-text,
+  .wpaam-update-password-form fieldset input.input-email,
+  .wpaam-update-password-form fieldset textarea,
+  .wpaam-update-password-form fieldset select {
+    margin: 0;
+    vertical-align: middle;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;
+    /* Firefox, other Gecko */
+    box-sizing: border-box;
+    /* Opera/IE 8+ */ }
+  .wpaam-profile-form fieldset small.description,
+  .wpaam-registration-form fieldset small.description,
+  .wpaam-password-form fieldset small.description,
+  .wpaam-update-password-form fieldset small.description {
+    opacity: .75;
+    font-size: 0.83em;
+    margin: 1.2em 0 0 0;
+    display: block;
+    line-height: 1.2em; }
+  .wpaam-profile-form fieldset input[type=checkbox] ~ .description,
+  .wpaam-registration-form fieldset input[type=checkbox] ~ .description,
+  .wpaam-password-form fieldset input[type=checkbox] ~ .description,
+  .wpaam-update-password-form fieldset input[type=checkbox] ~ .description {
+    display: inline; }
+  .wpaam-profile-form fieldset.fieldset-user_avatar .wpaam-uploaded-file-preview img,
+  .wpaam-registration-form fieldset.fieldset-user_avatar .wpaam-uploaded-file-preview img,
+  .wpaam-password-form fieldset.fieldset-user_avatar .wpaam-uploaded-file-preview img,
+  .wpaam-update-password-form fieldset.fieldset-user_avatar .wpaam-uploaded-file-preview img {
+    width: 70px;
+    height: 70px; }
+
+.wpaam-login-form form p.login-username,
+.wpaam-login-form form p.login-password,
+.wpaam-login-form form p.login-remember {
+  margin: 0 0 1em 0;
+  padding: 0 0 1em 0;
+  line-height: 2em;
+  border: 0;
+  border-bottom: 1px solid #eee;
+  zoom: 1; }
+  .wpaam-login-form form p.login-username:before, .wpaam-login-form form p.login-username:after,
+  .wpaam-login-form form p.login-password:before,
+  .wpaam-login-form form p.login-password:after,
+  .wpaam-login-form form p.login-remember:before,
+  .wpaam-login-form form p.login-remember:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    visibility: hidden; }
+  .wpaam-login-form form p.login-username:after,
+  .wpaam-login-form form p.login-password:after,
+  .wpaam-login-form form p.login-remember:after {
+    clear: both; }
+.wpaam-login-form form label {
+  display: block;
+  margin: 0;
+  width: 29%;
+  float: left;
+  vertical-align: middle; }
+  .wpaam-login-form form label small {
+    opacity: .75;
+    font-size: 0.83em; }
+.wpaam-login-form form div.field {
+  width: 70%;
+  float: right;
+  vertical-align: middle; }
+.wpaam-login-form form input[type=text], .wpaam-login-form form input[type=email], .wpaam-login-form form input[type=password], .wpaam-login-form form textarea, .wpaam-login-form form select {
+  margin: 0;
+  width: 70%;
+  float: right;
+  vertical-align: middle;
+  -webkit-box-sizing: border-box;
+  /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;
+  /* Firefox, other Gecko */
+  box-sizing: border-box;
+  /* Opera/IE 8+ */ }
+.wpaam-login-form form small.description {
+  opacity: .75;
+  font-size: 0.83em;
+  margin: 1.2em 0 0 0;
+  display: block;
+  line-height: 1.2em; }
+
+/* profile overview */
+.wpaam-user-overview .user-content {
+  vertical-align: middle; }
+  .wpaam-user-overview .user-content ul {
+    margin: 0px 0px; }
+    .wpaam-user-overview .user-content ul li {
+      display: inline-block;
+      margin-right: 5px; }
+
+/* Account page navigation */
+.wpaam-account-tabs {
+  border-bottom: 1px solid #eee;
+  margin-bottom: 15px; }
+
+/* helper links */
+div.wpaam-helper-links p {
+  margin-bottom: 0px; }
+
+/* password strength indicator */
+#password-strength {
+  background-color: #eee;
+  border: 1px solid #ddd;
+  margin: 13px 5px 5px 1px;
+  padding: 5px 15px;
+  width: 100%;
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center; }
+  #password-strength.short {
+    background-color: #f1adad;
+    border-color: #e35b5b; }
+  #password-strength.bad {
+    background-color: #fbc5a9;
+    border-color: #f78b53; }
+  #password-strength.good {
+    background-color: #ffe399;
+    border-color: #ffc733; }
+  #password-strength.strong {
+    background-color: #c1e1b9;
+    border-color: #83c373; }
+
+/* Messages */
+div.wpaam-message {
+  padding: 8px 35px 8px 14px;
+  margin-bottom: 18px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  background-color: #fcf8e3;
+  border: 1px solid #fbeed5;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  color: #c09853; }
+  div.wpaam-message p.the-message {
+    margin: 0px; }
+  div.wpaam-message.success {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #468847; }
+  div.wpaam-message.error {
+    background-color: #f2dede;
+    border-color: #eed3d7;
+    color: #b94a48; }
+  div.wpaam-message.info {
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    color: #3a87ad; }
+
+/* Styling for account page tabs */
+#wpaam-account-forms-tabs {
+  margin-bottom: 30px; }
+  #wpaam-account-forms-tabs ul {
+    list-style: none;
+    margin: 0; }
+    #wpaam-account-forms-tabs ul li {
+      display: inline-block;
+      margin: 0 15px 0px 0px; }
+      #wpaam-account-forms-tabs ul li a {
+        padding: 10px 15px;
+        border-radius: 3px; }
+        #wpaam-account-forms-tabs ul li a:hover {
+          text-decoration: none;
+          background: #fcfcfc; }
+      #wpaam-account-forms-tabs ul li.active a {
+        background: #efefef;
+        text-decoration: none; }
+
+.wpaam-required-star {
+  color: #b94a48; }
+
+.wpaam-remove-uploaded-file {
+  display: block; }
+
+#wpaam-no-user-found {
+  margin-top: 1rem; }
+
+
+
+
+/*# sourceMappingURL=wp_user_manager_frontend.css.map */
