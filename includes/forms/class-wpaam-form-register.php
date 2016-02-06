@@ -1,11 +1,6 @@
 <?php
 /**
- * WP User Manager Forms
- *
- * @package     wp-user-manager
- * @author      Alessandro Tesoro
- * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since       1.0.0
+ * WPAAM Form : Register
  */
 
 // Exit if accessed directly
@@ -445,7 +440,7 @@ class WPAAM_Form_Register extends WPAAM_Form {
 
 			$pwd = $values['register']['password'];
 			$do_user = wp_create_user( $username, $pwd, $email );
-
+			update_user_meta( $do_user, 'parent_user', 'owner');
 		}
 
 		// Check for errors
@@ -502,7 +497,7 @@ class WPAAM_Form_Register extends WPAAM_Form {
 		$pwd = wp_generate_password( 20, false );
 
 		$do_user = wp_create_user( $username, $pwd, $email );
-
+		update_user_meta( $do_user, 'parent_user', 'owner');
 		wpaam_new_user_notification( $do_user, $pwd );
 
 		return $do_user;

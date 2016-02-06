@@ -7,6 +7,7 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+
 function wpaam_add_settings_link( $links ) {
 	$settings_link = '<a href="'.admin_url( 'users.php?page=wpaam-settings' ).'">'.__('Settings','wpaam').'</a>';
 	array_push( $links, $settings_link );
@@ -227,7 +228,10 @@ function wpaam_login_redirect_detection( $url ) {
 }
 add_filter( 'wpaam_login_redirect_url', 'wpaam_login_redirect_detection', 99, 1 );
 
-// Add parent user name to user list table
+/* 
+***	Add custom column 'Parent User' in User List Table WP-ADMIN
+*/
+
 function wpaam_add_user_perent_column( $columns ) {
     $columns['parent_user'] = __( 'Parent User', 'wpaam' );
     return $columns;
@@ -248,7 +252,69 @@ function new_modify_user_table_row( $val, $column_name, $user_id ) {
 }
 add_filter( 'manage_users_custom_column', 'new_modify_user_table_row', 10, 3 );
 
-// Add parent user filter in the user list 
 
+/* 
+***	Removed column 'Email' in User List Table WP-ADMIN
+*/
+
+add_filter('manage_users_columns','remove_users_columns');
+function remove_users_columns($column_headers) {
+    global $current_user;
  
+    $users = get_users();
+ 
+    if (in_array($current_user->ID, $users)) {
+        unset($column_headers['email']);
+    }    
+ 
+    return $column_headers;
+}
+
+/* 
+***	Add Custom 'Parent User' Filter in User List Table 
+*/
+
+function add_parent_user_filter() {
+   	$aam_users = get_users(array('role' => 'aam_user'));
+    //echo "<pre>"; print_r($users); die;
+    if ( isset( $_GET[ 'parent_user' ]) ) {
+        $section = $_GET[ 'parent_user' ];
+        $section = !empty( $section[ 0 ] ) ? $section[ 0 ] : $section[ 1 ];
+    } else {
+        $section = -1;
+    }
+    echo ' <select name="parent_user[]" style="float:none;"><option value="">Parent User...</option>';
+    foreach ($aam_users as $aam_user) {
+    	$selected = $aam_user->user_login == $section ? ' selected="selected"' : '';
+	   	echo '<option value='.$aam_user->user_login.'>'.$aam_user->user_login.'</option>';
+   	}
+    echo '<input type="submit" class="button" value="Filter">';
+}
+add_action( 'restrict_manage_users', 'add_parent_user_filter' );
+
+function filter_users_by_parent_user( $query ) {
+    global $pagenow;
+
+    if ( is_admin() && 
+         'users.php' == $pagenow && 
+         isset( $_GET[ 'parent_user' ] ) && 
+         is_array( $_GET[ 'parent_user' ] )
+        ) {
+        $section = $_GET[ 'parent_user' ];
+        $section = !empty( $section[ 0 ] ) ? $section[ 0 ] : $section[ 1 ];
+        $meta_query = array(
+            array(
+                'key' => 'parent_user',
+                'value' => $section
+            )
+        );
+        $query->set( 'meta_key', 'parent_user' );
+        $query->set( 'meta_query', $meta_query );
+    }
+}
+add_filter( 'pre_get_users', 'filter_users_by_parent_user' );
+
+
+
+
 

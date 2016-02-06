@@ -39,22 +39,23 @@ class WPAAM_Form_Edit_Client extends WPAAM_Form {
 	}
 
 
-	// public static function validate_client_field(  ) {
+	public static function validate_client_field(  ) {
 		
+	$return ='';	
+	$first_name = $_POST['first_name'];
+	$last_name = $_POST['last_name'];
+	$client_email = $_POST['client_email'];
 		
-	// 	$user_name = $_POST['user_name'];
-	// 	$email = $_POST['email'];
-		
-	// 	if ( !$user_name )
-	// 		return new WP_Error( 'client-validation-error', __('A username is required for registration.', 'wpaam') );
-	// 	elseif ( !is_email($email, true) )
-	// 		return new WP_Error( 'client-validation-error', __( 'You must enter a valid email address.', 'wpaam' ) );
-	// 	elseif ( email_exists($email) )
-	// 		return new WP_Error( 'client-validation-error', __('Sorry, that email address is already used!', 'wpaam') );
+		if ( !$first_name )
+ 			return new WP_Error( 'client-validation-error', __('A client first name is required', 'wpaam') );
+	 	elseif ( !$last_name )
+	 		return new WP_Error( 'client-validation-error', __('A client last name is required', 'wpaam') );
+	 	elseif ( !$client_email )
+	 		return new WP_Error( 'client-validation-error', __('A client email is required', 'wpaam') );
 
-	// 	return $client;
+ 		return $return;
 		
-	// }
+	}
 
 	public static function uname_exists() {
     global $wpdb;
@@ -67,7 +68,7 @@ class WPAAM_Form_Edit_Client extends WPAAM_Form {
 	}
 
 	public static function process(){
-		if(isset($_GET['client_id']) && $_GET['client_id'] !== ''){
+		if(isset($_GET['client_id']) && $_GET['client_id'] != ''){
 			self::update_process();
 		}else{
 			self::add_process();
@@ -86,10 +87,10 @@ class WPAAM_Form_Edit_Client extends WPAAM_Form {
 		}
 
 		//Validate required
-		// if ( is_wp_error( ( $return = self::validate_client_field(  ) ) ) ) {
-		// 	self::add_error( $return->get_error_message() );
-		// 	return;
-		// }
+		if ( is_wp_error( ( $return = self::validate_client_field(  ) ) ) ) {
+			self::add_error( $return->get_error_message() );
+			return;
+		}
 
 		// Proceed to update the password
 		$user_login = self::$user->user_login.'_'.current_time( 'timestamp', 1 ); 
@@ -116,9 +117,7 @@ class WPAAM_Form_Edit_Client extends WPAAM_Form {
 			update_user_meta( $newuser_id, 'parent_user', self::$user->user_login);
 			update_user_meta( $newuser_id, 'company_name', $userdata['company_name']);
 			update_user_meta( $newuser_id, 'client_email', $userdata['client_email']);
-		
-
-			
+	
 
 			if ( is_wp_error($newuser_id) ) {
 
@@ -129,7 +128,7 @@ class WPAAM_Form_Edit_Client extends WPAAM_Form {
 				self::add_confirmation( __('you have successfully added a new client.', 'wpaam') );
 
 			}
-		
+
 	}
 
 	public static function update_process() {
@@ -142,8 +141,14 @@ class WPAAM_Form_Edit_Client extends WPAAM_Form {
 		if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'edit-client' ) ) {
 			return;
 		}
-		
 
+		//Validate required
+		if ( is_wp_error( ( $return = self::validate_client_field(  ) ) ) ) {
+			self::add_error( $return->get_error_message() );
+			return;
+		}
+		
+		// decelear client id 
 		$client_id = $_GET['client_id'];
 		
 		$updateddata = array(
@@ -159,25 +164,17 @@ class WPAAM_Form_Edit_Client extends WPAAM_Form {
 			
 		);		
 			
-			//global $wpdb;
-			//$user_id = $wpdb->update($wpdb->users, array('user_login' => $userdata['user_login'] , 'user_email' => $userdata['user_email']) , array('ID' => $client_id));
-			//$user_id = wp_update_user( array ( 'ID' => $client_id, 'user_login' => $userdata['user_login'] ) );
-			
-		if ( !$updateddata['first_name'] )
-	 		return new WP_Error( 'client-validation-error', __('A client first name is required', 'wpaam') );
-	 	elseif ( !$updateddata['last_name'] )
-	 		return new WP_Error( 'client-validation-error', __('A client last name is required', 'wpaam') );
-	 	elseif ( !$updateddata['client_email'] )
-	 		return new WP_Error( 'client-validation-error', __('A client email is required', 'wpaam') );
-	 	else{
-				update_user_meta( $client_id, 'parent_user', self::$user->user_login);
-				update_user_meta( $client_id, 'first_name', $updateddata['first_name']);
-				update_user_meta( $client_id, 'last_name', $updateddata['last_name']);
-				update_user_meta( $client_id, 'company_name', $updateddata['company_name']);
-				update_user_meta( $client_id, 'client_email', $updateddata['client_email']);
-			
-				self::add_confirmation( __('you have updated client data.', 'wpaam') );
-			}
+		//global $wpdb;
+		//$user_id = $wpdb->update($wpdb->users, array('user_login' => $userdata['user_login'] , 'user_email' => $userdata['user_email']) , array('ID' => $client_id));
+		//$user_id = wp_update_user( array ( 'ID' => $client_id, 'user_login' => $userdata['user_login'] ) );
+
+			update_user_meta( $client_id, 'parent_user', self::$user->user_login);
+			update_user_meta( $client_id, 'first_name', $updateddata['first_name']);
+			update_user_meta( $client_id, 'last_name', $updateddata['last_name']);
+			update_user_meta( $client_id, 'company_name', $updateddata['company_name']);
+			update_user_meta( $client_id, 'client_email', $updateddata['client_email']);
+		
+			self::add_confirmation( __('you have updated client data.', 'wpaam') );
 		
 	}
 

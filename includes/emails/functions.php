@@ -55,7 +55,7 @@ function wpaam_register_emails() {
  * @return void
  */
 function wpaam_new_user_notification( $user_id, $plaintext_pass ) {
-
+    
 	$user = get_userdata( $user_id );
 
 	// The blogname option is escaped with esc_html on the way into the database in sanitize_option
@@ -73,20 +73,28 @@ function wpaam_new_user_notification( $user_id, $plaintext_pass ) {
 	// Send notification to the user now.
 	if ( empty( $plaintext_pass ) )
 		return;
+    // a custom mail code for registered user's 
+		$message  = sprintf( esc_html__( 'Hello %s', 'wpaam' ), $user->user_login ) . "\r\n\r\n";
+		$message .= sprintf( esc_html__( 'Welcome to  %s', 'wpaam' ), $blogname  ) . "\r\n\r\n";
+		$message .= sprintf( esc_html__( 'These are your account details', 'wpaam' ) ) . "\r\n\r\n";
+		$message .= sprintf( esc_html__( 'Username: %s', 'wpaam' ), $user->user_login ) . "\r\n";
+		$message .= sprintf( esc_html__( 'E-mail: %s', 'wpaam' ), $plaintext_pass ) . "\r\n";
+		
+		wp_mail(  $user->user_email, sprintf( esc_html__( '[%s] Your Account', 'wpaam' ), $blogname ) , $message );
+
 
 	// Check if email exists first.
-	if ( wpaam_email_exists( 'register' ) ) {
-
-		// Retrieve the email from the database
-		$register_email = wpaam_get_email( 'register' ); 
-		$message = wpautop( $register_email['message'] );
-		$message = wpaam_do_email_tags( $message, $user_id, $plaintext_pass );
-
-		WPAAM()->emails->__set( 'heading', esc_html__( 'Your account', 'wpaam' ) );
+	// if ( wpaam_email_exists( 'register' ) ) {
+       
+	// 	//Retrieve the email from the database
+	// 	$register_email = wpaam_get_email( 'register' ); 
+	// 	$message = wpautop( $register_email['message'] );
+	// 	$message = wpaam_do_email_tags( $message, $user_id, $plaintext_pass );
+	// 	WPAAM()->emails->__set( 'heading', esc_html__( 'Your account', 'wpaam' ) );
+	// 	WPAAM()->emails->send( $user->user_email, $register_email['subject'], $message );
 		
-		WPAAM()->emails->send( $user->user_email, $register_email['subject'], $message );
-
-	}
+		
+	// }
 
 }
 
