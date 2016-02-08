@@ -8,6 +8,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 
+
 function wpaam_add_settings_link( $links ) {
 	$settings_link = '<a href="'.admin_url( 'users.php?page=wpaam-settings' ).'">'.__('Settings','wpaam').'</a>';
 	array_push( $links, $settings_link );
@@ -275,20 +276,24 @@ function remove_users_columns($column_headers) {
 */
 
 function add_parent_user_filter() {
-   	$aam_users = get_users(array('role' => 'aam_user'));
-    //echo "<pre>"; print_r($users); die;
+  
+    $aam_users = get_users(array('role' => 'aam_user'));
+   // echo "<pre>"; print_r($aam_users); die;
+
     if ( isset( $_GET[ 'parent_user' ]) ) {
         $section = $_GET[ 'parent_user' ];
         $section = !empty( $section[ 0 ] ) ? $section[ 0 ] : $section[ 1 ];
     } else {
         $section = -1;
     }
-    echo ' <select name="parent_user[]" style="float:none;"><option value="">Parent User...</option>';
-    foreach ($aam_users as $aam_user) {
-    	$selected = $aam_user->user_login == $section ? ' selected="selected"' : '';
-	   	echo '<option value='.$aam_user->user_login.'>'.$aam_user->user_login.'</option>';
-   	}
-    echo '<input type="submit" class="button" value="Filter">';
+    if(!empty($aam_users)):
+        echo ' <select name="parent_user[]" style="float:none;"><option value="">Parent User...</option>';
+        foreach ($aam_users as $aam_user) {
+        	$selected = $aam_user->user_login == $section ? ' selected="selected"' : '';
+    	   	echo '<option value='.$aam_user->user_login.'>'.$aam_user->user_login.'</option>';
+       	}
+        echo '<input type="submit" class="button" value="Filter">';
+    endif;
 }
 add_action( 'restrict_manage_users', 'add_parent_user_filter' );
 

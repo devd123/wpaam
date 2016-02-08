@@ -1336,3 +1336,10 @@ function wpaam_array_to_object( $array ) {
 function wpaam_is_multi_array( $array ) {
 	return ( count( $array ) !== count( $array, COUNT_RECURSIVE ) );
 }
+
+function wpaam_get_vatvalues( ) { 
+	
+	$vat_values  = array(5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,90,100);
+	return apply_filters( 'wpaam_get_vatvalues', $vat_values );
+	
+}
