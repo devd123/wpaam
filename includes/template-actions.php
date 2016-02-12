@@ -109,7 +109,7 @@ add_action( 'wpaam_account_tab_payments', 'wpaam_show_account_payments_form', 10
 // Fourth tab of account tab
 function wpaam_show_account_others_form( $current_tab, $all_tabs, $form, $fields, $user_id, $atts ) {
 
-	echo WPAAM()->forms->get_form( 'invoices' );
+	echo WPAAM()->forms->get_form( 'other-settings' );
 
 }
 add_action( 'wpaam_account_tab_others', 'wpaam_show_account_others_form', 10, 6 );
@@ -242,27 +242,6 @@ function wpaam_profile_update_messages() {
 }
 add_action( 'wpaam_before_account_form', 'wpaam_profile_update_messages' );
 
-// payments settings update 
-function wpaam_payments_update_messages() {
-
-	if ( isset( $_GET['updated'] ) && $_GET['updated'] == 'success' ) :
-		$args = array(
-			'id'   => 'wpaam-payments-updated',
-			'type' => 'success',
-			'text' => apply_filters( 'wpaam_payments_update_success_message', __( 'Payment settings successfully updated.', 'wpaam' ) )
-		);
-		wpaam_message( $args );
-	endif;
-	if ( isset( $_GET['updated'] ) && $_GET['updated'] == 'error' ) :
-		$args = array(
-			'id'   => 'wpaam-payments-error',
-			'type' => 'error',
-			'text' => apply_filters( 'wpaam_payments_update_error_message', __( 'Something went wrong.', 'wpaam' ) )
-		);
-		wpaam_message( $args );
-	endif;
-}
-add_action( 'wpaam_before_payments_form', 'wpaam_payments_update_messages' );
 
 function wpaam_show_add_client_form(){
 	get_wpaam_template( 'forms/add-client-form.php',

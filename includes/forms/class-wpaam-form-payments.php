@@ -1,11 +1,6 @@
 <?php
 /**
- * WP User Manager Forms: Payments Settings Form
- *
- * @package     wp-user-manager
- * @author      Alessandro Tesoro
- * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since       1.0.0
+ * WPAAM Forms: Payments Settings Form
  */
 
 // Exit if accessed directly
@@ -25,10 +20,6 @@ class WPAAM_Form_Payments extends WPAAM_Form {
 
 	/**
 	 * Init the form.
-	 *
-	 * @access public
-	 * @since 1.0.0
-	 * @return void
 	 */
 	public static function init() {
 
@@ -38,74 +29,17 @@ class WPAAM_Form_Payments extends WPAAM_Form {
 		if( ! is_admin() ) {
 
 			self::$user = wp_get_current_user();
-			add_filter( 'wpaam_profile_field_value', array( __CLASS__, 'set_payment_fields_values' ), 10, 3 );
-			//add_filter( 'wpaam_profile_field_options', array( __CLASS__, 'set_fields_options' ), 10, 3 );
-			//add_filter( 'wpaam/form/validate=profile', array( __CLASS__, 'validate_email' ), 10, 3 );
-			//add_filter( 'wpaam/form/validate=profile', array( __CLASS__, 'validate_nickname' ), 10, 3 );
 
 		}
 
-
-	}
-
-	/**
-	 * Setup field values on the frontend based on the user
-	 *
-	 * @access public
-	 * @since 1.0.0
-	 * @return $value value of the field.
-	 */
-	public static function set_payment_fields_values( $default, $field ) {
-
-		switch ( $field['meta'] ) {
-			case 'paypal_username':
-				return self::$user->paypal_username;
-				break;
-			case 'paypal_apikey':
-				return self::$user->paypal_apikey;
-				break;
-			case 'paypal_signature':
-				return self::$user->paypal_signature;
-				break;
-			case 'user_price_vat':
-				return self::$user->user_price_vat;
-				break;
-			default:
-				return apply_filters( 'wpaam_edit_payments_field_value', null, $field, self::$user->ID );
-				break;
-		}
-
-	}
-
-	/**
-	 * Define payments fields
-	 *
-	 * @access public
-	 * @since 1.0.0
-	 * @return void
-	 */
-	public static function get_payments_fields() {
-
-		self::$fields = array(
-			'payments' => wpaam_get_payments_fields()
-		);
 
 	}
 
 	/**
 	 * Process the submission.
-	 *
-	 * @access public
-	 * @since 1.0.0
-	 * @return void
 	 */
 	public static function process() {
 		
-		// Get fields
-		self::get_payments_fields();
-
-		// Get posted values
-		$values = self::get_posted_fields();
 
 		if ( empty( $_POST['wpaam_submit_form'] ) ) {
 			return;
@@ -116,63 +50,38 @@ class WPAAM_Form_Payments extends WPAAM_Form {
 		}
 
 		// Validate required
-		if ( is_wp_error( ( $return = self::validate_fields( $values, self::$form_name ) ) ) ) {
-			self::add_error( $return->get_error_message() );
-			return;
-		}
+		// if ( is_wp_error) {
+		// 	self::add_error( $return->get_error_message() );
+		// 	return;
+		// }
 
 		// Update the profile
-		self::update_payments( $values );
+		self::update_payments(  );
 
 	}
 
 	/**
 	 * Trigger update process.
 	 *
-	 * @access public
-	 * @since 1.0.0
-	 * @return void
 	 */
-	public static function update_payments( $values ) {
+	public static function update_payments(  ) {
 
-		if( empty($values) || !is_array($values) )
-			return;
+	
+		$user_data = array(
+			'paypal_username' => esc_attr( $_POST['paypal_username'] ),
+			'paypal_apikey' => esc_attr( $_POST['paypal_apikey'] ),
+			'paypal_signature' => esc_attr( $_POST['paypal_signature'] ),
+			'user_allow_vat' => esc_attr( $_POST['user_allow_vat'] ),
+			'user_vat_values' => esc_attr( $_POST['user_vat_values'] ),
+		);		
 
-		$user_data = array( 'ID' => self::$user->ID );
-
-		foreach ( $values['payments'] as $meta_key => $meta_value ) {
-
-			switch ( $meta_key ) {
-
-				case 'paypal_username':
-					$user_data += array( 'paypal_username' => $meta_value);
-				break;
-				case 'paypal_apikey':
-					$user_data += array( 'paypal_apikey' =>  $meta_value);
-				break;
-				case 'paypal_signature':
-					$user_data += array( 'paypal_signature' =>  $meta_value);
-				break;
-				case 'user_price_vat':
-					$user_data += array( 'user_price_vat' =>  $meta_value);
-				break;
-				default:
-					$user_data += array( $meta_key => $meta_value );
-					break;
-
-			}
-
-		}
-
-		do_action( 'wpaam_before_user_update', $user_data, $values, self::$user->ID );
-
+		
 		update_user_meta( self::$user->ID, 'paypal_username', $user_data['paypal_username'] );
 		update_user_meta( self::$user->ID, 'paypal_apikey', $user_data['paypal_apikey'] );
 		update_user_meta( self::$user->ID, 'paypal_signature', $user_data['paypal_signature'] );
-		update_user_meta( self::$user->ID, 'user_price_vat', $user_data['user_price_vat'] );
+		update_user_meta( self::$user->ID, 'user_allow_vat', $user_data['user_allow_vat'] );
+		update_user_meta( self::$user->ID, 'user_vat_values', $user_data['user_vat_values'] );
 
-
-		do_action( 'wpaam_after_user_update', $user_data, $values, self::$user->ID );
 
 		if ( is_wp_error( self::$user->ID ) ) {
 
@@ -191,14 +100,8 @@ class WPAAM_Form_Payments extends WPAAM_Form {
 	/**
 	 * Output the form.
 	 *
-	 * @access public
-	 * @since 1.0.0
-	 * @return void
 	 */
 	public static function output( $atts = array() ) {
-
-		// Get fields
-		self::get_payments_fields();
 
 		// Display template
 		if( is_user_logged_in() ) :
@@ -208,16 +111,16 @@ class WPAAM_Form_Payments extends WPAAM_Form {
 				self::show_errors();
 				// Show confirmation messages
 				self::show_confirmations();
-			}else{
-				get_wpaam_template( 'forms/payments-form.php',
-					array(
-						'atts'        => $atts,
-						'form'        => self::$form_name,
-						'fields'      => self::get_fields( 'payments' ),
-						'user_id'     => self::$user->ID,
-					)
-				);
 			}
+			
+			get_wpaam_template( 'forms/payments-form.php',
+				array(
+					'atts'        => $atts,
+					'form'        => self::$form_name,
+					'user_id'     => self::$user->ID,
+				)
+			);
+		
 	
 		// Show login form if not logged in
 		else :

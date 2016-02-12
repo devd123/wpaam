@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Advance Account Manager
+Plugin Name: Advance Accountability Manager
 Plugin URI:  https://neerusite.wordpress.com/
 Description: This plugin is developed for user accountablility management with their respective cleints
 Author:      Neeru Sharma
@@ -205,6 +205,8 @@ class WP_Adavance_Account_Manager {
 		require_once WPAAM_PLUGIN_DIR . 'includes/actions.php';
 		// Shortcodes
 		require_once WPAAM_PLUGIN_DIR . 'includes/classes/class-wpaam-shortcodes.php';
+		// Vat Values
+		//require_once WPAAM_PLUGIN_DIR . 'includes/class-wpaam-vat-values.php';
 		// Emails
 		require_once WPAAM_PLUGIN_DIR . 'includes/emails/class-wpaam-emails.php';
 		require_once WPAAM_PLUGIN_DIR . 'includes/emails/class-wpaam-emails-tags.php';
@@ -277,9 +279,10 @@ class WP_Adavance_Account_Manager {
 
 		}
 
-		// AAM Product for WPAAM
+		// AAM custom post type 
 		include( WPAAM_PLUGIN_DIR . 'AAM/product-registrations.php' );   
-		include( WPAAM_PLUGIN_DIR . 'AAM/quotation-registrations.php' );   
+		//include( WPAAM_PLUGIN_DIR . 'AAM/quotation-registrations.php' ); 
+		include( WPAAM_PLUGIN_DIR . 'AAM/vat-registrations.php' );   
 		// Ajax Handler
 		require_once WPAAM_PLUGIN_DIR . 'includes/classes/class-wpaam-ajax-handler.php';
 		// Permalinks for WPAAM

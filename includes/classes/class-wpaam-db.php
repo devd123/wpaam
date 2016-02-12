@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.0.0
 */
-abstract class wpaam_DB {
+abstract class WPAAM_DB {
 
 	/**
 	 * The name of our database table

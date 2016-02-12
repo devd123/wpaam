@@ -1,11 +1,11 @@
 <?php
 /**
- * WP User Manager Addons license handler.
+ * WPAAM Addons license handler.
  *
- * @package     wp-user-manager
- * @copyright   Alessandro Tesoro
+ * @package     wp-aam
+ * @copyright   Neeru Sharma
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since       1.2.4
+ * @since       1.0.0
  */
 
 // Exit if accessed directly

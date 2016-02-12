@@ -3,7 +3,6 @@
  * wpaam Template: Product List Template.
  * @since       1.0.0
  */
-	
 ?>
 
 	<?php if ( is_user_logged_in() && !current_user_can( 'edit_product' ) ) : ?>
