@@ -43,11 +43,6 @@ class WPAAM_Form_Edit_Quotation extends WPAAM_Form {
 	
 	public static function process() {
 		
-		// Get fields
-		//self::get_payments_fields();
-
-		// Get posted values
-		//$values = self::get_posted_fields();
 
 		if ( empty( $_POST['wpaam_submit_form'] ) ) {
 			return;
@@ -84,9 +79,6 @@ class WPAAM_Form_Edit_Quotation extends WPAAM_Form {
 		$all_tabs = array_keys( wpaam_get_quotations_page_tabs() );
 
 
-		// Get fields
-		//self::get_payments_fields();
-
 		// Display template
 		if ( is_user_logged_in() && current_user_can( 'edit_product' ) ) :
 
@@ -96,12 +88,11 @@ class WPAAM_Form_Edit_Quotation extends WPAAM_Form {
 				// Show confirmation messages
 				self::show_confirmations();
 			}
-			get_wpaam_template( 'forms/edit-quotation.php',
+			get_wpaam_template( 'forms/edit-quotation-form.php',
 				array(
 					'atts'        => $atts,
 					'form'        => self::$form_name,
-					//'fields'      => self::get_fields( 'products' ),
-					'user_id'     => self::$user->ID,
+					'author_id'     => self::$user->ID,
 					'current_tab' => $current_tab,
 					'all_tabs'    => $all_tabs
 				)

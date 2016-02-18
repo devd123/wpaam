@@ -35,6 +35,12 @@ class wpaam_Ajax_Handler {
 		// Update custom fields order
 		add_action( 'wp_ajax_wpaam_update_fields_order', array( $this, 'update_fields_order' ) );
 
+		// Get product by AAM User
+		add_action( 'wp_ajax_wpaam_get_product_by_aamuser', array( $this, 'get_product_by_aamuser' ) );
+
+		// Get product price 
+		add_action( 'wp_ajax_wpaam_get_product_by_aamuser', array( $this, 'wpaam_get_product_price' ) );
+
 	}
 
 	/**
@@ -232,6 +238,35 @@ class wpaam_Ajax_Handler {
 
 		wp_send_json_success( $return );
 
+	}
+
+	public function get_product_by_aamuser() {
+		// get the product list
+		//$term = $_POST['search_product']; 
+	
+		global $wpdb;
+		$author_id = get_current_user_id();
+		$results = $wpdb->get_results( "SELECT post_title FROM $wpdb->posts WHERE post_type = 'aam-product' AND post_author = '$author_id' AND post_title LIKE '%". $_POST["keyword"]."%'");
+		
+		echo '<ul id="product-list" style="list-style:none;">';
+		foreach ($results as $result) { ?>
+			<li onClick="selectProduct('<?php echo $result->post_title ?>');"><?php echo $result->post_title ?></li>
+		<?php }
+		echo '</ul>';
+
+		wp_die();
+	}
+
+	public function wpaam_get_product_price() {
+		// get the product list
+		$title = $_POST['product_name']; 
+	
+		global $wpdb;
+		$author_id = get_current_user_id();
+		echo $id = $wpdb->get_var( "SELECT ID FROM $wpdb->posts WHERE post_title = '$title' "); die;
+		$price = get_post_meta($id , 'product_price' , true);
+		echo $price;
+		wp_die();
 	}
 
 }

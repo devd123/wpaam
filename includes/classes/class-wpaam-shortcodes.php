@@ -18,8 +18,9 @@ class WPAAM_Shortcodes {
 	 * @access public
 	 * @return void
 	 */
-	public function __construct() {
 
+
+	public function __construct() {
 
 
 		add_filter( 'widget_text', 'do_shortcode' );
@@ -256,7 +257,8 @@ class WPAAM_Shortcodes {
 
 	// Set products page view and settings
 	public function wpaam_products( $atts = array()){
-	
+		
+		$user = wp_get_current_user();
 		// Get the tabs
 		$current_tab = wpaam_get_current_products_tab();
 		$all_tabs = array_keys( wpaam_get_products_page_tabs() );
@@ -267,6 +269,7 @@ class WPAAM_Shortcodes {
 			get_wpaam_template( 'products.php',
 				array(
 					'atts'        => $atts,
+					'user_id'     => $user->ID,
 					'current_tab' => $current_tab,
 					'all_tabs'    => $all_tabs
 				)
@@ -283,6 +286,7 @@ class WPAAM_Shortcodes {
 	// Set quotations page view and settings
 	public function wpaam_quotations($atts, $content = null) {
 		
+		$user = wp_get_current_user();
 		//Get the tabs
 		$current_quotations_tab = wpaam_get_current_quotations_tab();
 		$all_tabs_qt = array_keys( wpaam_get_quotations_page_tabs() );
@@ -293,6 +297,7 @@ class WPAAM_Shortcodes {
 			get_wpaam_template( 'quotations.php',
 				array(
 					'atts'        => $atts,
+					'user_id'     => $user->ID,
 					'current_tab' => $current_quotations_tab,
 					'all_tabs'    => $all_tabs_qt
 				)

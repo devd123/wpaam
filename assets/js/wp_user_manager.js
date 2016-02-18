@@ -2,7 +2,7 @@
  * http://wpusermanager.com
  * Copyright (c) 2015; * Licensed GPLv2+ */
 jQuery(document).ready(function ($) {
-
+	
 	/**
 	 *  Get current page url
 	 */
@@ -14,8 +14,26 @@ jQuery(document).ready(function ($) {
 	var wpaam_Frontend = {
 
 		init : function() {
+			this.general();
 			this.ajax_remove_file();
 			this.directory_sort();
+			this.aam_user_product();
+			this.aam_product_price();
+		},
+
+		// General Functions
+		general : function() {
+
+			if ( $.isFunction($.fn.select2) ) {
+
+				jQuery("select.select2").select2({
+					width: 'resolve'
+				});
+
+				jQuery(".wppf-multiselect, select.select2_multiselect").select2();
+
+			}
+
 		},
 
 		// Check password strenght function
@@ -116,7 +134,60 @@ jQuery(document).ready(function ($) {
 		        location.href = jQuery(this).val();
 		    });
 
+		},
+
+		// get the product for aam user's
+		aam_user_product : function () {
+			
+			
+			jQuery("#search_product").keyup(function (){
+				var search_product = $(this).val();
+				$.ajax({
+					type: 'POST',
+					url: wpaam_frontend_js.ajax,
+					data: {
+						'action' : 'wpaam_get_product_by_aamuser', // Calls the ajax action
+						'keyword' : search_product
+					},	
+					beforeSend: function(){
+						$("#search_product").css("background","#FFF url(LoaderIcon.gif) no-repeat 165px");
+					},
+					success: function(data){
+						$("#suggesstion-box").show();
+						$("#suggesstion-box").html(data);
+						$("#search_product").css("background","#FFF");
+						console.log(data);
+						$("#quotation_price").val(data['id']); 
+					}
+				});
+
+			});
+
+		},
+
+		// get the product for aam user's
+		aam_product_price : function () {
+		
+			$(document).on("keyup",".auto-selected-product",function (){
+				var name = $(".auto-selected-product").attr('value');
+				alert(name);
+					$.ajax({
+						type: 'POST',
+						url: wpaam_frontend_js.ajax,
+						data: {
+							'action' : 'wpaam_get_product_price', // Calls the ajax action
+							'product_name' : name
+						},	
+						success: function(data){
+							console.log(data);
+						}
+					});
+
+			});
+
 		}
+
+
 
 	};
 
@@ -173,3 +244,11 @@ jQuery(document).ready(function ($) {
 	}
 
 });
+
+//To select product name from auto search list
+function selectProduct(val) {
+
+jQuery("#search_product").val(val);
+jQuery("#suggesstion-box").hide();
+}
+

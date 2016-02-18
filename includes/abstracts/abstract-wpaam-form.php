@@ -183,7 +183,7 @@ abstract class WPAAM_Form {
 		if ( ! $file ) {
 			$file = '';
 		}
-
+		
 		return $file;
 	}
 

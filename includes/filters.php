@@ -96,9 +96,9 @@ add_filter( 'map_meta_cap', 'wpaam_map_meta_cap', 10, 4 );
  */
 function wpaam_upload_dir( $pathdata ) {
 	global $wpaam_upload, $wpaam_uploading_file;
-
+   
 	if ( ! empty( $wpaam_upload ) ) {
-		$dir = apply_filters( 'wpaam_upload_dir', 'wp-user-manager-uploads' );
+		$dir = apply_filters( 'wpaam_upload_dir', 'wp-aam-uploads' );
 
 		if ( empty( $pathdata['subdir'] ) ) {
 			$pathdata['path']   = $pathdata['path'] . '/' . $dir;
@@ -135,6 +135,42 @@ function wpaam_admin_rate_us( $footer_text ) {
 
 }
 add_filter( 'admin_footer_text', 'wpaam_admin_rate_us' );
+
+/**
+ * Add custom classes to body tag
+ *
+ * @since       1.0.0
+ * @param       array $classes
+ * @return      array
+ */
+function wpaam_body_classes($classes) {
+
+    if( is_page( wpaam_get_core_page_id('login') ) ) {
+        // add class if we're on a login page
+        $classes[] = 'wpaam-login-page';
+    } else if( is_page( wpaam_get_core_page_id('register') ) ) {
+        // add class if we're on a register page
+        $classes[] = 'wpaam-register-page';
+    } else if( is_page( wpaam_get_core_page_id('account') ) ) {
+        // add class if we're on a account page
+        $classes[] = 'wpaam-account-page';
+    } else if( is_page( wpaam_get_core_page_id('profile') ) ) {
+
+        // add class if we're on a profile page
+        $classes[] = 'wpaam-profile-page';
+
+        // add user to body class if set
+        if( wpaam_is_single_profile() )
+            $classes[] = 'wpaam-user-' . wpaam_is_single_profile();
+
+    } else if( is_page( wpaam_get_core_page_id('password') ) ) {
+        // add class if we're on a password page
+        $classes[] = 'wpaam-password-page';
+    }
+
+    return $classes;
+}
+add_filter( 'body_class', 'wpaam_body_classes' );
 
 /**
  * Retrieve custom avatar if any

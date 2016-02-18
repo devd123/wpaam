@@ -93,20 +93,23 @@ class WPAAM_Form_Edit_Client extends WPAAM_Form {
 		}
 
 		// Proceed to update the password
-		$user_login = self::$user->user_login.'_'.current_time( 'timestamp', 1 ); 
+		$user_name = self::$user->user_login.'_'.current_time( 'timestamp', 1 ); 
 		$user_pass = wp_generate_password();
+		
 		$userdata = array(
 			'user_pass' => $user_pass,
-			'user_login' => $user_login,
+			'user_login' => $user_name,
+			'civilite' => esc_attr( $_POST['civilite'] ),
 			'first_name' => esc_attr( $_POST['first_name'] ),
 			'last_name' => esc_attr( $_POST['last_name'] ),
 			'company_name' => esc_attr( $_POST['company_name'] ),
+			'siret' => esc_attr( $_POST['siret'] ),
+			'street' => esc_attr( $_POST['street'] ),
+			'zip_code' => esc_attr( $_POST['zip_code'] ),
+			'city' => esc_attr( $_POST['city'] ),
+			'country' => esc_attr( $_POST['country'] ),
+			'phone' => esc_attr( $_POST['phone'] ),
 			'client_email' => esc_attr( $_POST['client_email'] ),
-			//'user_url' => esc_attr( $_POST['website'] ),
-			// 'street' => esc_attr( $_POST['street'] ),
-			// 'zipcode' => esc_attr( $_POST['zipcode'] ),
-			// 'city' => esc_attr( $_POST['city'] ),
-			// 'country' => esc_attr( $_POST['country'] ),
 			'role' => esc_attr('aam_client'),
 		);		
 			//print_r($userdata); die;		
@@ -115,7 +118,14 @@ class WPAAM_Form_Edit_Client extends WPAAM_Form {
 			wpaam_new_user_notification( $newuser_id, $user_pass );
 			
 			update_user_meta( $newuser_id, 'parent_user', self::$user->user_login);
+			update_user_meta( $newuser_id, 'civilite', $userdata['civilite']);
 			update_user_meta( $newuser_id, 'company_name', $userdata['company_name']);
+			update_user_meta( $newuser_id, 'siret', $userdata['siret']);
+			update_user_meta( $newuser_id, 'street', $userdata['street']);
+			update_user_meta( $newuser_id, 'zip_code', $userdata['zip_code']);
+			update_user_meta( $newuser_id, 'city', $userdata['city']);
+			update_user_meta( $newuser_id, 'country', $userdata['country']);
+			update_user_meta( $newuser_id, 'phone', $userdata['phone']);
 			update_user_meta( $newuser_id, 'client_email', $userdata['client_email']);
 	
 
@@ -151,16 +161,18 @@ class WPAAM_Form_Edit_Client extends WPAAM_Form {
 		// decelear client id 
 		$client_id = $_GET['client_id'];
 		
-		$updateddata = array(
+		$userdata = array(
+			'civilite' => esc_attr( $_POST['civilite'] ),
 			'first_name' => esc_attr( $_POST['first_name'] ),
 			'last_name' => esc_attr( $_POST['last_name'] ),
 			'company_name' => esc_attr( $_POST['company_name'] ),
+			'siret' => esc_attr( $_POST['siret'] ),
+			'street' => esc_attr( $_POST['street'] ),
+			'zip_code' => esc_attr( $_POST['zip_code'] ),
+			'city' => esc_attr( $_POST['city'] ),
+			'country' => esc_attr( $_POST['country'] ),
+			'phone' => esc_attr( $_POST['phone'] ),
 			'client_email' => esc_attr( $_POST['client_email'] ),
-			//'user_url' => esc_attr( $_POST['website'] ),
-			// 'street' => esc_attr( $_POST['street'] ),
-			// 'zipcode' => esc_attr( $_POST['zipcode'] ),
-			// 'city' => esc_attr( $_POST['city'] ),
-			// 'country' => esc_attr( $_POST['country'] ),
 			
 		);		
 			
@@ -168,13 +180,19 @@ class WPAAM_Form_Edit_Client extends WPAAM_Form {
 		//$user_id = $wpdb->update($wpdb->users, array('user_login' => $userdata['user_login'] , 'user_email' => $userdata['user_email']) , array('ID' => $client_id));
 		//$user_id = wp_update_user( array ( 'ID' => $client_id, 'user_login' => $userdata['user_login'] ) );
 
-			update_user_meta( $client_id, 'parent_user', self::$user->user_login);
-			update_user_meta( $client_id, 'first_name', $updateddata['first_name']);
-			update_user_meta( $client_id, 'last_name', $updateddata['last_name']);
-			update_user_meta( $client_id, 'company_name', $updateddata['company_name']);
-			update_user_meta( $client_id, 'client_email', $updateddata['client_email']);
+			update_user_meta( $client_id, 'civilite', $userdata['civilite']);
+			update_user_meta( $client_id, 'first_name', $userdata['first_name']);
+			update_user_meta( $client_id, 'last_name', $userdata['last_name']);
+			update_user_meta( $client_id, 'company_name', $userdata['company_name']);
+			update_user_meta( $client_id, 'siret', $userdata['siret']);
+			update_user_meta( $client_id, 'street', $userdata['street']);
+			update_user_meta( $client_id, 'zip_code', $userdata['zip_code']);
+			update_user_meta( $client_id, 'city', $userdata['city']);
+			update_user_meta( $client_id, 'country', $userdata['country']);
+			update_user_meta( $client_id, 'phone', $userdata['phone']);
+			update_user_meta( $client_id, 'client_email', $userdata['client_email']);
 		
-			self::add_confirmation( __('you have updated client data.', 'wpaam') );
+			self::add_confirmation( __('you have succesfully updated client data.', 'wpaam') );
 		
 	}
 

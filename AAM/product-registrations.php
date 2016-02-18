@@ -167,13 +167,19 @@ add_action( 'manage_aam-product_posts_custom_column' , 'custom_product_column' ,
 
 /* Add Auther Filter - Product List */
 function add_author_filter() {
-    $arguments = array( 'name' => 'author', 
-                        'show_option_all' => __( 'All authors', 'wpaam' ) 
-                      );
-    if ( isset( $_GET[ 'user' ] ) ) {
-        $arguments[ 'selected' ] = $_GET[ 'user' ];
-    }
-    wp_dropdown_users( $arguments );
+     
+    // if ( isset( $_GET[ 'user' ] ) ) {
+    //     $arguments[ 'selected' ] = $_GET[ 'user' ];
+    // }
+
+    $aam_users = get_users(array('role' => 'aam_user'));
+    echo '<select id="author" name="author">
+    	<option value="0">All AAM User...</option>';
+        foreach ($aam_users as $aam_user) {
+    	   	echo '<option  value='.$aam_user->ID.'>'.$aam_user->user_login.'</option>';
+       	}
+
+    //wp_dropdown_users( $arguments );
 }
 add_filter( 'restrict_manage_posts' ,   'add_author_filter' );
 

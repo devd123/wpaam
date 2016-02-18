@@ -6,16 +6,30 @@
 	
 ?>
 
-	<?php if ( is_user_logged_in() && !current_user_can( 'edit_product' ) ) : ?>
-
-			<p class="log-in-out alert">
-			<?php _e('You are not allow to see this page !', 'wpaam'); ?>
-			</p>
-	
-	<?php elseif ( is_user_logged_in() && current_user_can( 'edit_product' ) && current_user_can( 'publish_product' ) ) : ?>
 	<!-- <p align="right"><a class="add-button" href="<?php echo esc_url( get_permalink( get_page_by_title( 'Add Product' ) ) ); ?>">Add Product</a></p> -->
 	<table class="wp-list-table" colspam="">
-  		<thead>
+  		
+		
+	<?php
+	global $wpdb;
+	
+	$author = get_current_user_id();  
+	// set pagination for the quotation list
+	$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+	$args = array('post_type' => 'aam-quotations' , 'author' => $author , 'posts_per_page' => 10 , 'paged' => $paged);
+	$query = new WP_Query( $args);
+	
+	
+	
+	if ( $query->have_posts() ) : 
+		$number = 1;
+		while ( $query->have_posts() ) : $query->the_post(); 
+		$productid = get_the_ID();
+	
+	
+	// end php
+ 	?>
+		<thead>
 	  		<th width="10%">S.N.</th>
 	  		<th>Name</th>
 	  		<th>SKU</th>
@@ -24,19 +38,8 @@
 	  		<th>Created</th>
 	  		<th>Action</th>
   		</thead>
-		
-	<?php
-		global $wpdb;
-		$author = get_current_user_id();  
-		$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-		$args = array('post_type' => 'aam-quotations' , 'author' => $author , 'posts_per_page' => 10 , 'paged' => $paged);
-		$query = new WP_Query( $args);
-		if ( $query->have_posts() ) : 
-			$number = 1;
-			while ( $query->have_posts() ) : $query->the_post(); 
-			$productid = get_the_ID(); ?>
+
 		<tbody>
-  			
 		  	<tr id="<?php echo get_the_ID();?>">
 			  	<td><?php echo $number; ?></td>   
 			    <td><?php echo the_title(); ?></td>
@@ -61,13 +64,8 @@
 		) ); ?>
 		</p>
 		<?php else : ?>
-				<p><?php _e( 'Sorry, no product matched your criteria.' ); ?></p>
+				<p><?php _e( 'Sorry, no quotation matched your criteria.' ); ?></p>
 		<?php endif; ?>
 	</table> 
 
-	<?php else : ?>
-		<p class="alert">
-					<?php _e(' you are not allowed to see this page', 'wpaam'); ?>
-		</p><!-- .alert -->
-
-	<?php endif; ?>
+	

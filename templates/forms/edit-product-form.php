@@ -43,7 +43,7 @@
 			<fieldset data-name="product_vat" data-required="1" data-label="VAT" data-type="select" class="fieldset-product_vat">
 				<label for="product_vat">Product VAT </label>
 				<div class="field">
-				<input type="text" required="" value="<?php echo $auther_selected_vat.'%'; ?>" placeholder="" id="product_price" name="product_price" class="input-price" disabled>
+				<input type="text" required="" value="<?php echo $auther_selected_vat.'%'; ?>" placeholder="" id="product_vat" name="product_vat" class="input-vat" disabled>
 				</div>
 			</fieldset>	
 			<?php endif; ?>

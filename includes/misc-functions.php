@@ -146,7 +146,7 @@ function wpaam_get_permalink_structures() {
  * Get ID of a core page.
  *
  * @since 1.0.0
- * @param string  $name the name of the page. Supports: login, register, password, account, profile.
+ * @param string  $name the name of the page. Supports: login, register, password, account.
  * @return int $id of the core page.
  */
 function wpaam_get_core_page_id( $page ) {
@@ -165,9 +165,6 @@ function wpaam_get_core_page_id( $page ) {
 			break;
 		case 'account':
 			$id = wpaam_get_option( 'account_page' );
-			break;
-		case 'profile':
-			$id = wpaam_get_option( 'profile_page' );
 			break;
 		case 'clients':
 			$id = wpaam_get_option( 'clients_page' );
@@ -191,7 +188,7 @@ function wpaam_get_core_page_id( $page ) {
  * Get URL of a core page.
  *
  * @since 1.0.0
- * @param string  $name the name of the page. Supports: login, register, password, account, profile.
+ * @param string  $name the name of the page. Supports: login, register, password, account.
  * @return string $url of the core page.
  */
 function wpaam_get_core_page_url( $page ) {
@@ -210,9 +207,6 @@ function wpaam_get_core_page_url( $page ) {
 			break;
 		case 'account':
 			$url = esc_url( get_permalink( wpaam_get_core_page_id( 'account' ) ) );
-			break;
-		case 'profile':
-			$url = esc_url( get_permalink( wpaam_get_core_page_id( 'profile' ) ) );
 			break;
 		case 'clients':
 			$url = esc_url( get_permalink( wpaam_get_core_page_id( 'clients' ) ) );
@@ -373,7 +367,7 @@ function wpaam_user_exists( $user_data, $method_type ) {
  * @return array|WP_Error Array of objects containing either file information or an error
  */
 function wpaam_trigger_upload_file( $field_key, $field ) {
-
+	
 	if ( isset( $_FILES[ $field_key ] ) && ! empty( $_FILES[ $field_key ] ) && ! empty( $_FILES[ $field_key ]['name'] ) ) {
 
 		if( $field_key == 'user_avatar' ) {
@@ -627,25 +621,7 @@ function wpaam_generate_pages( $redirect = false ) {
 
 	}
 
-	// Generate user profile  page
-	if ( ! wpaam_get_option( 'profile_page' ) ) {
-
-		$profile = wp_insert_post(
-			array(
-				'post_title'     => __( 'Profile', 'wpaam' ),
-				'post_content'   => '[wpaam_profile]',
-				'post_status'    => 'publish',
-				'post_author'    => 1,
-				'post_type'      => 'page',
-				'comment_status' => 'closed'
-			)
-		);
-
-		wpaam_update_option( 'profile_page', $profile );
-
-	}
-
-
+	//Generate user client management page
 	if ( ! wpaam_get_option( 'clients_page' ) ) {
 
 		$clients = wp_insert_post(
@@ -761,7 +737,7 @@ function wpaam_get_account_page_tabs() {
 
 	$tabs['details'] = array(
 		'id'    => 'details',
-		'title' => __('Edit Account', 'wpaam'),
+		'title' => __('Profile', 'wpaam'),
 	);
 	$tabs['change-password'] = array(
 		'id'    => 'change-password',
@@ -773,7 +749,7 @@ function wpaam_get_account_page_tabs() {
 	);
 	$tabs['others'] = array(
 		'id'    => 'others',
-		'title' => __('Other Settings', 'wpaam'),
+		'title' => __('Other', 'wpaam'),
 	);
 
 	return apply_filters( 'wpaam_get_account_page_tabs', $tabs );

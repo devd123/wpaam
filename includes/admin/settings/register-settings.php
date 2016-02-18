@@ -297,20 +297,6 @@ function wpaam_get_registered_settings() {
 					'desc' => __('Enter your paypal account api Signature', 'wpaam'),
 					'type' => 'text'
 				),
-				// 'tax_header' => array(
-				// 	'id'   => 'vat_header',
-				// 	'name' => __( 'VAT Settings', 'wpaam' ),
-				// 	'type' => 'header'
-				// ),
-				// 'vat_list_values' => array(
-				// 	'id'   => 'vat_list_values',
-				// 	'name' => __( 'Allow tax values', 'wpaam' ),
-				// 	'desc' => __('Select the vat for the clients ', 'wpaam'),
-				// 	'type'        => 'multiselect',
-				// 	'placeholder' => __('Select the vat values from the list.', 'wpaam'),
-				// 	'class'       => 'select2_multiselect',
-				// 	'options' => wpaam_get_vat_values()
-				// ),
 
 			)
 		),
@@ -654,9 +640,10 @@ function wpaam_get_settings_tabs() {
 
 	$tabs                   = array();
 	$tabs['general']        = __( 'General', 'wpaam' );
-	$tabs['payments']       = __( 'Payments', 'wpaam' );
 	$tabs['registration']   = __( 'Registration', 'wpaam' );
-	$tabs['email'] 			= __( 'Emails', 'wpaam' );
+	$tabs['profile']       = __( 'Profile', 'wpaam' );
+	$tabs['payments']       = __( 'Payments', 'wpaam' );
+	//$tabs['email'] 			= __( 'Emails', 'wpaam' );
 	$tabs['conditions']     = __( 'Conditions', 'wpaam' );
 	//$tabs['redirects']      = __( 'Redirects', 'wpaam' );
 

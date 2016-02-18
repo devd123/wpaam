@@ -84,7 +84,7 @@ $clients = $my_users->get_results();
 					  <td><?php echo get_user_meta($client_info->ID, 'first_name', true).'&nbsp'.get_user_meta($client->ID, 'last_name', true); ?></td>
 				      <td><?php echo get_user_meta($client_info->ID, 'client_email', true) ?></td>
 				      <td><?php echo get_user_meta($client_info->ID, 'company_name', true); ?></a></td>
-				      <td><?php echo $client_info->user_registered; ?></td>
+				      <td><?php echo date("d/m/Y", strtotime($client_info->user_registered)); ?></td>
 				      <td><a href="<?php echo esc_url( get_permalink( get_page_by_title( 'Clients' ) ) ).'&client_tab=edit&client_id='.$client->ID; ?>"><span>Edit</span></a></td>
 			      	<?php $serial++; } ?>
 				   </tr>
