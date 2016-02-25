@@ -38,44 +38,27 @@ class WPAAM_Form_Profile extends WPAAM_Form {
 
 			self::$user = wp_get_current_user();
 			
-			
-			// add_filter( 'wpaam/form/validate=profile', array( __CLASS__, 'validate_email' ), 10, 3 );
-			// add_filter( 'wpaam/form/validate=profile', array( __CLASS__, 'validate_nickname' ), 10, 3 );
-
 		}
 
 		// Store uploaded avatar
 		if( wpaam_get_option( 'custom_avatars' ) ) {
-			add_action( 'wpaam_after_user_update', array( __CLASS__, 'add_avatar' ), 10, 3 );
+			//add_action( 'wpaam_after_user_update', array( __CLASS__, 'add_avatar' ), 10, 3 );
 		}
 
 	}
 
+	public static function check_client_prefix(){
+		global $wpdb;
+		$user_id = self::$user->ID;
+		$prefix = $_POST['client_prefix'];
+		$rows = $wpdb->get_row("SELECT user_id FROM $wpdb->usermeta WHERE meta_key = 'client_prefix' AND meta_value = '$prefix' AND user_id != '$user_id' ");
+		//print_r($rows); die;
 	
+		if( count($rows) > 0){
+			return new WP_Error( 'client-validation-error', __('The client prefix value is already exists.', 'wpaam') );
+		}
 
-	// /**
-	//  * Validate email field.
-	//  *
-	//  * @access public
-	//  * @since 1.0.0
-	//  * @return void
-	//  */
-	// public static function validate_email( $passed, $fields, $values ) {
-
-	// 	$email = $values['profile'][ 'user_email' ];
-
-	// 	// If current email hasn't changed - abort.
-	// 	if( $email == self::$user->user_email )
-	// 		return;
-
-	// 	if( email_exists( $email ) && $email !== self::$user->user_email )
-	// 		return new WP_Error( 'email-validation-error', __( 'Email address already exists.', 'wpaam' ) );
-
-	// 	return $passed;
-
-	// }
-
-	
+	}
 
 	/**
 	 * Process the submission.
@@ -94,12 +77,12 @@ class WPAAM_Form_Profile extends WPAAM_Form {
 		if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'profile' ) ) {
 			return;
 		}
-
+		
 		// Validate required
-		// if ( is_wp_error( ( $return = self::validate_fields( $values, self::$form_name ) ) ) ) {
-		// 	self::add_error( $return->get_error_message() );
-		// 	return;
-		// }
+		if ( is_wp_error( ( $return = self::check_client_prefix(  ) ) ) ) {
+			self::add_error( $return->get_error_message() );
+			return;
+		}
 
 		// Update the profile
 		self::update_profile(  );
@@ -116,14 +99,13 @@ class WPAAM_Form_Profile extends WPAAM_Form {
 	public static function update_profile(  ) {
 
 		$user_data = array(
-			
+			'ID'           => self::$user->ID,
 			'company_name' => esc_attr( $_POST['company_name'] ),
 			'company_status' => esc_attr( $_POST['company_status'] ),
-			'company_logo' => esc_attr( $_POST['company_logo'] ),
+			//'company_logo' => esc_attr( $_POST['company_logo'] ),
 			'description' => esc_attr( $_POST['description'] ),
 			'first_name' => esc_attr( $_POST['first_name'] ),
-			'last_name' => esc_attr( $_POST['last_name'] ),
-			'family_name' => esc_attr( $_POST['family_name'] ),
+			'last_name' => esc_attr( $_POST['family_name'] ),
 			'client_prefix' => esc_attr( $_POST['client_prefix'] ),
 
 		
@@ -131,13 +113,13 @@ class WPAAM_Form_Profile extends WPAAM_Form {
 		//echo "<pre>"; print_r($user_data); die;
 		do_action( 'wpaam_before_user_update', $user_data, $user_data, self::$user->ID );
 		
-		//$user_id = wp_update_user( $user_data ); print_r($user_id); die;
+		$user_id = wp_update_user( $user_data ); //print_r($user_id); die;
 
 		update_user_meta( self::$user->ID, 'company_name', $user_data['company_name'] );
 		update_user_meta( self::$user->ID, 'company_status', $user_data['company_status'] );
 		update_user_meta( self::$user->ID, 'description', $user_data['description'] );
-		update_user_meta( self::$user->ID, 'first_name', $user_data['last_name'] );
-		update_user_meta( self::$user->ID, 'family_name', $user_data['family_name'] );
+		update_user_meta( self::$user->ID, 'first_name', $user_data['first_name'] );
+		update_user_meta( self::$user->ID, 'last_name', $user_data['last_name'] );
 		update_user_meta( self::$user->ID, 'client_prefix', $user_data['client_prefix'] );
 
 
@@ -146,18 +128,14 @@ class WPAAM_Form_Profile extends WPAAM_Form {
 
 		if ( is_wp_error( $user_id ) ) {
 
-			$this_page = add_query_arg( array( 'updated' => 'error' ), get_permalink() );
-			wp_redirect( esc_url( $this_page ) );
-			exit();
+			self::add_error( $user_id->get_error_message() );
 
 		} else {
 
-			self::add_confirmation( __('Payments settings successfully updated.', 'wpaam') );
-			$this_page = add_query_arg( array( 'updated' => 'success' ), get_permalink() );
-			wp_redirect( esc_url( $this_page ) );
-			exit();
+			self::add_confirmation( __('you have successfully updated  the account settings.', 'wpaam') );
 
 		}
+
 
 
 	}
@@ -247,11 +225,10 @@ class WPAAM_Form_Profile extends WPAAM_Form {
 			}
 
 
-			get_wpaam_template( 'account.php',
+			get_wpaam_template( 'forms/account-form.php',
 				array(
 					'atts'        => $atts,
 					'form'        => self::$form_name,
-					'fields'      => self::get_fields( 'profile' ),
 					'user_id'     => self::$user->ID,
 					'current_tab' => $current_account_tab,
 					'all_tabs'    => $all_tabs

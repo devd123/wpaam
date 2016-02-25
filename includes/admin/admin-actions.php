@@ -42,9 +42,9 @@ add_action( 'wpaam_registration_status', 'wpaam_option_registration_status' );
 function wpaam_add_admin_capability() {
     // gets the author role
     $role = get_role( 'administrator' );
-    // This only works, because it accesses the class instance.
-    $role->add_cap( 'publish_product' ); 
-    $role->add_cap('edit_products');
+    //This only works, because it accesses the class instance.
+ 	$role->add_cap( 'publish_product' ); 
+ 	$role->add_cap('edit_products');
 	$role->add_cap('edit_product');
 	$role->add_cap('delete_product');
 	$role->add_cap('read_product');
@@ -53,6 +53,11 @@ function wpaam_add_admin_capability() {
 	$role->add_cap('edit_quotation');
 	$role->add_cap('delete_quotation');
 	$role->add_cap('read_quotation');
+	$role->add_cap('publish_invoice');
+	$role->add_cap('edit_invoices');
+	$role->add_cap('edit_invoice');
+	$role->add_cap('delete_invoice');
+	$role->add_cap('read_invoice');
 }
 add_action( 'admin_init', 'wpaam_add_admin_capability');
 
@@ -177,7 +182,7 @@ function wpaam_check_installation_date() {
 
   // Display the notice
   if ( $install_date && $past_date >= $install_date ) {
-      add_action( 'admin_notices', 'wpaam_display_rating_notice' );
+      //add_action( 'admin_notices', 'wpaam_display_rating_notice' );
   }
 
 }

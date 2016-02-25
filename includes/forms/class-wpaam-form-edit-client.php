@@ -41,9 +41,11 @@ class WPAAM_Form_Edit_Client extends WPAAM_Form {
 
 	public static function validate_client_field(  ) {
 		
-	$return ='';	
+	$civilite = $_POST['civilite'];	
 	$first_name = $_POST['first_name'];
 	$last_name = $_POST['last_name'];
+	$company_name = $_POST['company_name'];
+	$phone = $_POST['phone'];
 	$client_email = $_POST['client_email'];
 		
 		if ( !$first_name )
@@ -52,8 +54,6 @@ class WPAAM_Form_Edit_Client extends WPAAM_Form {
 	 		return new WP_Error( 'client-validation-error', __('A client last name is required', 'wpaam') );
 	 	elseif ( !$client_email )
 	 		return new WP_Error( 'client-validation-error', __('A client email is required', 'wpaam') );
-
- 		return $return;
 		
 	}
 
@@ -93,7 +93,8 @@ class WPAAM_Form_Edit_Client extends WPAAM_Form {
 		}
 
 		// Proceed to update the password
-		$user_name = self::$user->user_login.'_'.current_time( 'timestamp', 1 ); 
+		$prefix = get_user_meta(self::$user->ID , 'client_prefix' , true);
+		$user_name = $prefix.'_',esc_attr($_POST['first_name']).'_'.time(); 
 		$user_pass = wp_generate_password();
 		
 		$userdata = array(
@@ -114,8 +115,8 @@ class WPAAM_Form_Edit_Client extends WPAAM_Form {
 		);		
 			//print_r($userdata); die;		
 		
-			$newuser_id = wp_insert_user( $userdata ); 
-			wpaam_new_user_notification( $newuser_id, $user_pass );
+		$newuser_id = wp_insert_user( $userdata ); 
+		wpaam_new_user_notification( $newuser_id, $user_pass );
 			
 			update_user_meta( $newuser_id, 'parent_user', self::$user->user_login);
 			update_user_meta( $newuser_id, 'civilite', $userdata['civilite']);

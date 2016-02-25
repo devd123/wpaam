@@ -533,17 +533,17 @@ function wpaam_get_registered_settings() {
 					'name' => __( 'Restore Pages:', 'wpaam' ),
 					'type' => 'hook'
 				),
-				'restore_fields' => array(
-					'id'   => 'restore_fields',
-					'name' => __( 'Restore broken fields:', 'wpaam' ),
-					'type' => 'hook'
-				),
-				'exclude_usernames' => array(
-					'id'   => 'exclude_usernames',
-					'name' => __( 'Excluded usernames:', 'wpaam' ),
-					'desc' => '<br/>'.__('Enter the usernames that you wish to disable. Separate each username on a new line.', 'wpaam'),
-					'type' => 'textarea'
-				),
+				// 'restore_fields' => array(
+				// 	'id'   => 'restore_fields',
+				// 	'name' => __( 'Restore broken fields:', 'wpaam' ),
+				// 	'type' => 'hook'
+				// ),
+				// 'exclude_usernames' => array(
+				// 	'id'   => 'exclude_usernames',
+				// 	'name' => __( 'Excluded usernames:', 'wpaam' ),
+				// 	'desc' => '<br/>'.__('Enter the usernames that you wish to disable. Separate each username on a new line.', 'wpaam'),
+				// 	'type' => 'textarea'
+				// ),
 			)
 		),
 	);
@@ -641,7 +641,7 @@ function wpaam_get_settings_tabs() {
 	$tabs                   = array();
 	$tabs['general']        = __( 'General', 'wpaam' );
 	$tabs['registration']   = __( 'Registration', 'wpaam' );
-	$tabs['profile']       = __( 'Profile', 'wpaam' );
+	//$tabs['profile']       = __( 'Profile', 'wpaam' );
 	$tabs['payments']       = __( 'Payments', 'wpaam' );
 	//$tabs['email'] 			= __( 'Emails', 'wpaam' );
 	$tabs['conditions']     = __( 'Conditions', 'wpaam' );

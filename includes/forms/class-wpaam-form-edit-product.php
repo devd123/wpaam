@@ -53,16 +53,12 @@ class WPAAM_Form_Edit_Product extends WPAAM_Form {
 			return new WP_Error( 'product-validation-error', __('A product name is required for create new product.', 'wpaam') );
 		elseif ( $title_exists )
 			return new WP_Error( 'product-validation-error', __('This product is already exists.', 'wpaam') );
-		elseif ( !sku )
+		elseif ( !$sku )
 			return new WP_Error( 'product-validation-error', __( 'A product sku is required for create new product.', 'wpaam' ) );
 		elseif ( $sku_exists )
 			return new WP_Error( 'product-validation-error', __( 'This product sku is already used please try other', 'wpaam' ) );
-		elseif ( !price )
+		elseif ( !$price )
 			return new WP_Error( 'product-validation-error', __( 'A product price is required for create new product.', 'wpaam' ) );
-
-		
-
-		return $product;
 		
 	}
 
@@ -132,18 +128,20 @@ class WPAAM_Form_Edit_Product extends WPAAM_Form {
 		}
 
 		
-			// Add the content of the form to $post as an array
+			// Add the produst with their respective price according to vat
+			$final_price = esc_attr($_POST['product_price']) + (esc_attr($_POST['product_price']) * esc_attr($_POST['product_vat'])) / 100 ; 
 			$product_data = array(
 				'post_title'    => esc_attr($_POST['post_title']),
 				'product_sku'   => esc_attr($_POST['product_sku']),
-				'product_price' => esc_attr($_POST['product_price']),
+				'product_price' => $final_price,
 				'product_vat'   => esc_attr($_POST['product_vat']),
 				'post_author'   => self::$user->ID,
 				'post_status'   => 'publish', 
 				'post_type'     => 'aam-product',  
 			);
+			//echo "<pre>"; print_r($product_data); die;
 
-			$newproduct = wp_insert_post( $product_data , $wp_error); 
+			$newproduct = wp_insert_post( $product_data ); 
 	        update_post_meta ( $newproduct, 'product_sku', $product_data['product_sku'] );
 	        update_post_meta ( $newproduct, 'product_price', $product_data['product_price'] );
 	        update_post_meta ( $newproduct, 'product_vat', $product_data['product_vat'] );
@@ -171,12 +169,13 @@ class WPAAM_Form_Edit_Product extends WPAAM_Form {
 		}
 
 		$product_id = $_GET['product_id'];
+		$final_price = esc_attr($_POST['product_price']) + (esc_attr($_POST['product_price']) * esc_attr($_POST['product_vat'])) / 100 ;
 		// Add the content of the form to $post as an array
 		$product_data = array(
 			'ID'            => $product_id,
 			'post_title'    => esc_attr($_POST['post_title']),
 			'product_sku'   => esc_attr($_POST['product_sku']),
-			'product_price' => esc_attr($_POST['product_price']),
+			'product_price' => $final_price,
 			'product_vat'   => esc_attr($_POST['product_vat']),
 			'post_author'   => self::$user->ID,
 			'post_status'   => 'publish', 

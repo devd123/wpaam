@@ -205,7 +205,29 @@ class WPAAM_Shortcodes {
 	// Set accoount page view and settings
 	public function wpaam_account( $atts, $content=null ) {
 
-		return WPAAM()->forms->get_form( 'profile', $atts );
+		$user = wp_get_current_user();
+		// Get the tabs
+		$current_account_tab = wpaam_get_current_account_tab();
+		$all_tabs = array_keys( wpaam_get_account_page_tabs() );
+
+		// Display template
+		if ( is_user_logged_in() ) :
+
+			get_wpaam_template( 'account.php',
+				array(
+					'atts'        => $atts,
+					'user_id'     => $user->ID,
+					'current_tab' => $current_account_tab,
+					'all_tabs'    => $all_tabs
+				)
+			);
+	
+		// Show login form if not logged in
+		else :
+
+			echo wpaam_login_form();
+
+		endif;
 		
 	}
 
@@ -315,8 +337,8 @@ class WPAAM_Shortcodes {
 	// Set invoices page view and settings
 	public function wpaam_invoices($atts, $content = null) {
 		
+		$user = wp_get_current_user();
 		//Get the tabs
-		echo "we are working yet"; exit;
 		$current_invoices_tab = wpaam_get_current_invoices_tab();
 		$all_tabs_inv = array_keys( wpaam_get_invoices_page_tabs() );
 
@@ -326,6 +348,8 @@ class WPAAM_Shortcodes {
 			get_wpaam_template( 'invoices.php',
 				array(
 					'atts'        => $atts,
+					'form'		  => 'edit-invoice',
+					'user_id'     => $user->ID,
 					'current_tab' => $current_invoices_tab,
 					'all_tabs'    => $all_tabs_inv
 				)

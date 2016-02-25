@@ -281,7 +281,8 @@ class WP_Adavance_Account_Manager {
 
 		// AAM custom post type 
 		include( WPAAM_PLUGIN_DIR . 'AAM/product-registrations.php' );   
-		//include( WPAAM_PLUGIN_DIR . 'AAM/quotation-registrations.php' ); 
+		include( WPAAM_PLUGIN_DIR . 'AAM/quotation-registrations.php' ); 
+		include( WPAAM_PLUGIN_DIR . 'AAM/invoice-registrations.php' ); 
 		include( WPAAM_PLUGIN_DIR . 'AAM/vat-registrations.php' );   
 		// Ajax Handler
 		require_once WPAAM_PLUGIN_DIR . 'includes/classes/class-wpaam-ajax-handler.php';

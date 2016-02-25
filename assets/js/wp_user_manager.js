@@ -17,8 +17,8 @@ jQuery(document).ready(function ($) {
 			this.general();
 			this.ajax_remove_file();
 			this.directory_sort();
-			this.aam_user_product();
-			this.aam_product_price();
+			//this.aam_user_product();
+			//this.mutliple_product_input();
 		},
 
 		// General Functions
@@ -150,14 +150,12 @@ jQuery(document).ready(function ($) {
 						'keyword' : search_product
 					},	
 					beforeSend: function(){
-						$("#search_product").css("background","#FFF url(LoaderIcon.gif) no-repeat 165px");
+						$("#search_product").css("background","#FFF");
 					},
 					success: function(data){
 						$("#suggesstion-box").show();
 						$("#suggesstion-box").html(data);
 						$("#search_product").css("background","#FFF");
-						console.log(data);
-						$("#quotation_price").val(data['id']); 
 					}
 				});
 
@@ -166,24 +164,25 @@ jQuery(document).ready(function ($) {
 		},
 
 		// get the product for aam user's
-		aam_product_price : function () {
+		mutliple_product_input : function () {
 		
-			$(document).on("keyup",".auto-selected-product",function (){
-				var name = $(".auto-selected-product").attr('value');
-				alert(name);
-					$.ajax({
-						type: 'POST',
-						url: wpaam_frontend_js.ajax,
-						data: {
-							'action' : 'wpaam_get_product_price', // Calls the ajax action
-							'product_name' : name
-						},	
-						success: function(data){
-							console.log(data);
-						}
-					});
+		  	var maxField = 10; //Input fields increment limitation
+		    var addButton = $('.add_button'); //Add button selector
+		    var wrapper = $('.field_wrapper'); //Input field wrapper
+		    var fieldHTML = '<div><input type="text" name="multi_products[]" id="search_product" value=""/><a href="javascript:void(0);" class="remove_button" title="Remove field"><img src="remove-icon.png"/></a><div id="suggesstion-box"></div></div>'; //New input field html 
+		    var x = 1; //Initial field counter is 1
+		    $(addButton).click(function(){ //Once add button is clicked
+		        if(x < maxField){ //Check maximum number of input fields
+		            x++; //Increment field counter
+		            $(wrapper).append(fieldHTML); // Add field html
+		        }
+		    });
+		    $(wrapper).on('click', '.remove_button', function(e){ //Once remove button is clicked
+		        e.preventDefault();
+		        $(this).parent('div').remove(); //Remove field html
+		        x--; //Decrement field counter
+		    });
 
-			});
 
 		}
 
@@ -243,12 +242,89 @@ jQuery(document).ready(function ($) {
 	    );
 	}
 
+	// Product autocomplete filter suggestion
+	jQuery(function() {
+
+		jQuery(document).on('keyup' , '.select_product' , function (){
+			//var search_term = $(this).val();
+			$.ajax({
+				type: 'POST',
+				dataType: 'json',
+				url: wpaam_frontend_js.ajax,
+				data: {
+					'action' : 'wpaam_get_product_by_aamuser', // Calls the ajax action
+					//'keyword' : search_term
+				},	
+				success: function(res){
+					var availableTags = res;
+					
+					function split( val ) {
+				      return val.split( /,\s*/ );
+				    }
+				    function extractLast( term ) {
+				      return split( term ).pop();
+				    }
+				 
+					    jQuery( "#multi_products" )
+					      // don't navigate away from the field on tab when selecting an item
+					      .bind( "keydown", function( event ) {
+					        if ( event.keyCode === $.ui.keyCode.TAB &&
+					            $( this ).autocomplete( "instance" ).menu.active ) {
+					          event.preventDefault();
+					        }
+				      	})
+				      	.autocomplete({
+					        minLength: 0,
+					        source: function( request, response ) {
+					          // delegate back to autocomplete, but extract the last term
+					          response( jQuery.ui.autocomplete.filter(
+					            availableTags, extractLast( request.term ) ) );
+					        },
+					        focus: function() {
+					          // prevent value inserted on focus
+					          return false;
+					        },
+					        select: function( event, ui ) {
+					          var terms = split( this.value );
+					          // remove the current input
+					          terms.pop();
+					          // add the selected item
+					          terms.push( ui.item.value );
+					          // add placeholder to get the comma-and-space at the end
+					          terms.push( "" );
+					          this.value = terms.join( ", " );
+					          return false;
+					        }
+				      	});
+			
+				}
+			});
+
+		});
+	});
+	
+
+    
 });
 
 //To select product name from auto search list
-function selectProduct(val) {
-
-jQuery("#search_product").val(val);
+function selectProduct(product_name) {
+//console.log(product_name);
+jQuery("#search_product").val(product_name);
 jQuery("#suggesstion-box").hide();
+
+	jQuery.ajax({
+		type: 'POST',
+		url: wpaam_frontend_js.ajax,
+		data: {
+			'action' : 'wpaam_get_product_price', // Calls the ajax action
+			'product_name' : product_name
+		},	
+		success: function(data){
+			jQuery("#quotation_price").val(data);
+		}
+	});
 }
+
+
 

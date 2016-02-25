@@ -11,20 +11,20 @@
 
 <div id="wpaam-account" class="wpaam-account-wrapper">
 
-	<?php do_action( 'wpaam_before_quotations', $current_tab, $all_tabs, $form, $fields, $user_id, $atts ); ?>
+	<?php do_action( 'wpaam_before_invoices', $current_tab, $all_tabs, $form, $fields='', $user_id, $atts ); ?>
 
 	<?php
 		
 		// Display tabs content.
 		// Check that the tab exists or - null if we're on /account/ page.
-		if ( $current_tab === null || wpaam_quotations_tab_exists( $current_tab ) ) {
+		if ( $current_tab === null || wpaam_invoices_tab_exists( $current_tab ) ) {
 
 			switch ( $current_tab ) {
 				case null: // Return first tab if null - meaning we're on /account/ page
-					do_action( "wpaam_quotations_tab_{$all_tabs[0]}", $current_tab, $all_tabs, $form, $fields, $user_id, $atts );
+					do_action( "wpaam_invoices_tab_{$all_tabs[0]}", $current_tab, $all_tabs, $form, $fields='', $user_id, $atts );
 					break;
 				case $current_tab:
-					do_action( "wpaam_quotations_tab_{$current_tab}", $current_tab, $all_tabs, $form, $fields, $user_id, $atts );
+					do_action( "wpaam_invoices_tab_{$current_tab}", $current_tab, $all_tabs, $form, $fields='', $user_id, $atts );
 					break;
 			}
 
@@ -42,7 +42,5 @@
 		}
 
 	?>
-
-	<?php do_action( 'wpaam_after_quotations', $current_tab, $all_tabs, $form, $fields, $user_id, $atts ); ?>
 
 </div>

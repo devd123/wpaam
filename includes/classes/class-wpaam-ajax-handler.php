@@ -39,7 +39,7 @@ class wpaam_Ajax_Handler {
 		add_action( 'wp_ajax_wpaam_get_product_by_aamuser', array( $this, 'get_product_by_aamuser' ) );
 
 		// Get product price 
-		add_action( 'wp_ajax_wpaam_get_product_by_aamuser', array( $this, 'wpaam_get_product_price' ) );
+		add_action( 'wp_ajax_wpaam_get_product_price', array( $this, 'get_product_price' ) );
 
 	}
 
@@ -241,29 +241,22 @@ class wpaam_Ajax_Handler {
 	}
 
 	public function get_product_by_aamuser() {
-		// get the product list
-		//$term = $_POST['search_product']; 
-	
+		
 		global $wpdb;
 		$author_id = get_current_user_id();
-		$results = $wpdb->get_results( "SELECT post_title FROM $wpdb->posts WHERE post_type = 'aam-product' AND post_author = '$author_id' AND post_title LIKE '%". $_POST["keyword"]."%'");
-		
-		echo '<ul id="product-list" style="list-style:none;">';
-		foreach ($results as $result) { ?>
-			<li onClick="selectProduct('<?php echo $result->post_title ?>');"><?php echo $result->post_title ?></li>
-		<?php }
-		echo '</ul>';
-
+		$results = $wpdb->get_results( "SELECT ID , post_title FROM $wpdb->posts WHERE post_type = 'aam-product' AND post_author = '$author_id' AND post_status = 'publish' ");
+		foreach ($results as $key => $value) {
+			$post_title[] = $value->post_title;
+		}
+		echo json_encode($post_title);
 		wp_die();
 	}
 
-	public function wpaam_get_product_price() {
+	public function get_product_price() {
 		// get the product list
-		$title = $_POST['product_name']; 
-	
+		$product_name = $_POST['product_name']; 
 		global $wpdb;
-		$author_id = get_current_user_id();
-		echo $id = $wpdb->get_var( "SELECT ID FROM $wpdb->posts WHERE post_title = '$title' "); die;
+		$id = $wpdb->get_var( "SELECT ID FROM $wpdb->posts WHERE post_name = '$product_name' ");
 		$price = get_post_meta($id , 'product_price' , true);
 		echo $price;
 		wp_die();

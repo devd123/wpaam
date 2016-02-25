@@ -14,16 +14,15 @@ function wpaam_add_options_link() {
 
 	global $wpaam_settings_page;
 
+	$wpaam_settings_page = add_users_page(  __( 'VAT Manager', 'wpaam' ), __( 'VAT Values ', 'wpaam' ), 'manage_options', 'wpaam_show_vats', 'wpaam_render_vats' );
+	$wpaam_settings_page = add_users_page(  __( 'Product Manager', 'wpaam' ), __( 'Products', 'wpaam' ), 'manage_options', 'wpaam_show_products', 'wpaam_render_products' );
+	$wpaam_settings_page = add_users_page(  __( 'Quotation Manager', 'wpaam' ), __( 'Quotations', 'wpaam' ), 'manage_options', 'wpaam_show_quotations', 'wpaam_render_quotations' );
+	$wpaam_settings_page = add_users_page(  __( 'Invoices Manager', 'wpaam' ), __( 'Invoices', 'wpaam' ), 'manage_options', 'wpaam_show_invoices', 'wpaam_render_invoices' );
 	$wpaam_settings_page = add_users_page( __('WPAAM Settings', 'wpaam'), __('WAAM Settings', 'wpaam'), 'manage_options', 'wpaam-settings', 'wpaam_options_page' );
 	//$wpaam_settings_page = add_users_page( __('Vat Settings', 'wpaam'), __('Vat Settings', 'wpaam'), 'manage_options', 'wpaam-vat-setting', 'WPAAM_Vat_Values::add_vat_values' );
-	//$wpaam_settings_page = add_users_page( __( 'WPAAM Profile Fields Editor', 'wpaam' ), __( 'Profile Fields', 'wpaam' ), 'manage_options', 'wpaam-profile-fields', 'WPAAM_Fields_Editor::editor_page' );
-	//$wpaam_settings_page = add_users_page( __( 'WPAAM Edit Field', 'wpaam' ), __( 'Edit Field', 'wpaam' ), 'manage_options', 'wpaam-edit-field', 'WPAAM_Fields_Editor::edit_field_page' );
-	//$wpaam_settings_page = add_users_page( __( 'WPAAM Users', 'wpaam' ), __( 'WPAAM Users', 'wpaam' ), 'manage_options', 'wpaam-user-list', 'WPAAM_Users_List::get_users' );
-	//$wpaam_settings_page = add_users_page( __('WPAAM Email Editor', 'wpaam'), __('WPAAM Email Editor', 'wpaam'), 'manage_options', 'wpaam-edit-email', 'WPAAM_Emails_Editor::get_emails_editor_page' );
-	// $wpaam_settings_page = add_menu_page( __('Advance Accountability Manager', 'wpaam'), __('AAM Manager', 'wpaam'), 'manage_options', 'wpaam-manager', 'wpaam_Getting_Started::getting_started_screen' );
-	// $wpaam_settings_page = add_submenu_page( 'wpaam-manager', __('My Account Detials', 'wpaam'), __('My Account', 'wpaam'), 'manage_options', 'wpaam-myaccount', 'wpaam_user_profile' );
-	// $wpaam_settings_page = add_submenu_page( 'wpaam-manager', __('Users List Detials', 'wpaam'), __('Users List', 'wpaam'), 'manage_options', 'wpaam-userlist', 'wpaam_Users_List::wpaam_get_user_list' );
-	// $wpaam_settings_page = add_submenu_page( 'wpaam-manager', __('Application Manager Settings', 'wpaam'), __('Application Settings', 'wpaam'), 'manage_options', 'wpaam-settings', 'wpaam_options_page' );
+	
+	
+	
 	
 	add_action( 'admin_head', 'wpaam_hide_admin_pages' );
 

@@ -37,25 +37,25 @@ function aam_product() {
 		'public'             => true,
 		'publicly_queryable' => true,
 		'show_ui'            => true,
-		'show_in_menu'       => true,
+		'show_in_menu'       => false,
 		'show_in_nav_menus'  => true,
 		'query_var'          => true,
 		'rewrite'            => array(
 			'slug'       => 'product',
 			'with_front' => false
 			),
-		'capability_type'    => 'aam-product',
-			'capabilities' => array(
-				'publish_posts' => 'publish_product',
-				'edit_posts' => 'edit_products',
-				'edit_post' => 'edit_product',
-				'delete_post' => 'delete_product',
-				'read_post' => 'read_product',
-			),
+		// 'capability_type'    => 'aam-product',
+		// 	'capabilities' => array(
+		// 		'publish_posts' => 'publish_product',
+    //       'read_post' => 'read_product',
+		// 		'edit_posts' => 'edit_products',
+    //       'delete_post' => 'delete_product',
+		// 		'edit_post' => 'edit_product',
+    //     'edit_others_posts' => 'edit_others_products'
+			
+		// 	),
 		'hierarchical'       => false,
 		'has_archive'        => true,
-		'menu_position'      => 70,
-		'menu_icon'          => 'dashicons-art',
 		'supports'           => array('title','author', 'aam_user')
 	);
 
@@ -67,6 +67,21 @@ function aam_product() {
 		$args             // array of arguments for this custom post type
 	);
 
+}
+
+
+// Add product submenu in the under the user page
+function wpaam_render_products(){
+  $url = admin_url().'edit.php?post_type=aam-product';
+  ?>
+   <script>location.href='<?php echo $url;?>';</script>
+  <?php
+}
+function wpaam_render_new_product(){
+  $url = admin_url().'post-new.php?post_type=aam-product';
+  ?>
+  <script>location.href='<?php echo $url;?>';</script>
+  <?php
 }
 
 /* Fire our meta box setup function on the post editor screen. */

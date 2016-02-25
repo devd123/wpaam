@@ -4,107 +4,7 @@
 /*----------------------------------------------------------------------------*/
 
 register_activation_hook( __FILE__, 'aam_quotation_mgmt_activation', 10 );
-//add_action( 'init', 'aam_quotation_services', 10 );
-//add_action( 'init', 'aam_quotation_tags', 10 );
 add_action( 'init', 'aam_quotation', 10 );
-
-function aam_quotation_services() {
-
-	$labels = array(
-		'name'                       => _x( 'Services', 'taxonomy general name', 'quotation-mgmt' ),
-		'singular_name'              => _x( 'Service', 'taxonomy singular name', 'quotation-mgmt' ),
-		'search_items'               => __( 'Search Services', 'quotation-mgmt' ),
-		'popular_items'              => __( 'Popular Services', 'quotation-mgmt' ),
-		'all_items'                  => __( 'All Services', 'quotation-mgmt' ),
-		'view_item'                  => __( 'View Service', 'quotation-mgmt' ),
-		'parent_item'                => __( 'Parent Service', 'quotation-mgmt' ),
-		'parent_item_colon'          => __( 'Parent Service:', 'quotation-mgmt' ),
-		'edit_item'                  => __( 'Edit Service', 'quotation-mgmt' ),
-		'update_item'                => __( 'Update Service', 'quotation-mgmt' ),
-		'add_new_item'               => __( 'Add New Service', 'quotation-mgmt' ),
-		'new_item_name'              => __( 'New Service', 'quotation-mgmt' ),
-		'separate_items_with_commas' => __( 'Separate Services with commas', 'quotation-mgmt' ),
-		'add_or_remove_items'        => __( 'Add or remove Services', 'quotation-mgmt' ),
-		'choose_from_most_used'      => __( 'Choose from Most Used Services', 'quotation-mgmt' ),
-		'not_found'                  => __( 'No Services found.', 'quotation-mgmt' ),
-	);
-
-	$args = array(
-		'labels'            => $labels,
-		'public'            => true,
-		'hierarchical'      => true,
-		'show_ui'           => true,
-		'show_in_nav_menus' => true,
-		'show_tagcloud'     => false,
-		'args'              => array(
-			'orderby' => 'term_order'
-			),
-		'rewrite'           => array(
-			'slug'       => 'quotation/services',
-			'with_front' => false ),
-		'query_var'         => true,
-	);
-
-	$args = apply_filters( 'quotation_mgmt_services_args', $args );
-
-	// register services as a custom taxonomy
-	register_taxonomy(
-		'aam-services',  // unique handle to avoid potential conflicts
-		'aam-quotation', // this custom taxonomy should only be associated with our custom post type registered in aam-quotation-registration.php
-		$args             // array of arguments for this custom taxonomy
-	);
-
-}
-
-
-
-function aam_quotation_tags() {
-
-	$labels = array(
-		'name'                       => _x( 'Portfolio Tags', 'taxonomy general name', 'quotation-mgmt' ),
-		'singular_name'              => _x( 'Portfolio Tag', 'taxonomy singular name', 'quotation-mgmt'),
-		'search_items'               => __( 'Search Portfolio Tags', 'quotation-mgmt' ),
-		'popular_items'              => __( 'Popular Portfolio Tags', 'quotation-mgmt' ),
-		'all_items'                  => __( 'All Portfolio Tags', 'quotation-mgmt' ),
-		'view_item'                  => __( 'View Portfolio Tag', 'quotation-mgmt' ),
-		'edit_item'                  => __( 'Edit Portfolio Tag', 'quotation-mgmt' ),
-		'update_item'                => __( 'Update Portfolio Tag', 'quotation-mgmt' ),
-		'add_new_item'               => __( 'Add New Portfolio Tag', 'quotation-mgmt' ),
-		'new_item_name'              => __( 'New Portfolio Tag', 'quotation-mgmt' ),
-		'separate_items_with_commas' => __( 'Separate Portfolio Tags with commas', 'quotation-mgmt' ),
-		'add_or_remove_items'        => __( 'Add or Remove Portfolio Tags', 'quotation-mgmt' ),
-		'choose_from_most_used'      => __( 'Choose from Most Used Portfolio Tags', 'quotation-mgmt' ),
-		'not_found'                  => __( 'No Portfolio Tags found.', 'quotation-mgmt' ),
-	);
-
-	$args = array(
-		'labels'            => $labels,
-		'public'            => true,
-		'hierarchical'      => false,
-		'show_ui'           => true,
-		'show_in_nav_menus' => true,
-		'show_tagcloud'     => false,
-		'args'              => array(
-			'orderby' => 'term_order'
-			),
-		'rewrite'           => array(
-			'slug'       => 'quotation/quotation-tags',
-			'with_front' => false,
-			),
-		'query_var'         => true,
-	);
-
-	$args = apply_filters( 'quotation_mgmt_quotation_tag_args', $args );
-
-	// register quotation tags as a custom taxonomy
-	register_taxonomy(
-		'aam-quotation-tags', // unique handle to avoid potential conflicts
-		'aam-quotation',      // this custom taxonomy should only be associated with our custom post type registered in aam-quotation-registration.php
-		$args                  // array of arguments for this custom taxonomy
-	);
-
-}
-
 
 /**
  * Quotation
@@ -138,40 +38,32 @@ function aam_quotation() {
 		'not_found_in_trash' => __( 'No Quotation found in Trash', 'wpaam' ),
 	);
 
-	$supports = array(
-		'title',
-		'editor',
-		'thumbnail',
-		'excerpt',
-		'revisions',
-		'author',
-	);
 
 	$args = array(
 		'labels'             => $labels,
 		'public'             => true,
 		'publicly_queryable' => true,
 		'show_ui'            => true,
-		'show_in_menu'       => true,
+		'show_in_menu'       => false,
 		'show_in_nav_menus'  => true,
 		'query_var'          => true,
 		'rewrite'            => array(
 			'slug'       => 'quotation',
 			'with_front' => false
 			),
-		'capability_type'    => 'aam-quotation',
-			'capabilities' => array(
-				'publish_posts' => 'publish_quotation',
-				'edit_posts' => 'edit_quotations',
-				'edit_post' => 'edit_quotation',
-				'delete_post' => 'delete_quotation',
-				'read_post' => 'read_quotation',
-			),
+		// 'capability_type'    => 'aam-quotation',
+		// 	'capabilities' => array(
+		// 		'publish_posts' => 'publish_quotation',
+		// 		'edit_posts' => 'edit_quotations',
+		// 		'edit_post' => 'edit_quotation',
+		// 		'delete_post' => 'delete_quotation',
+		// 		'read_post' => 'read_quotation',
+		// 	),
 		'hierarchical'       => false,
 		'has_archive'        => true,
-		'menu_position'      => 5,
-		'menu_icon'          => 'dashicons-art',
-		'supports'           => $supports,
+		// 'menu_position'      => 70,
+		// 'menu_icon'          => 'dashicons-art',
+		'supports'           => array('title','author', 'aam_user')
 	);
 
 	$args = apply_filters( 'quotation_mgmt_args', $args );
@@ -184,15 +76,7 @@ function aam_quotation() {
 
 }
 
-
-
 function aam_quotation_mgmt_activation() {
-
-	// aam-services custom taxonomy
-	//aam_quotation_services();
-
-	// aam-quotation-tgs custom taxonomy
-	//aam_quotation_tags();
 
 	// custom post type
 	aam_quotation();
@@ -202,48 +86,33 @@ function aam_quotation_mgmt_activation() {
 
 }
 
-register_deactivation_hook( __FILE__, 'aam_quotation_mgmt_deactivation', 10 );
-
-
-function aam_quotation_mgmt_deactivation() {
-	flush_rewrite_rules();
+// Add quotation submenu in the under the user page
+function wpaam_render_quotations(){
+  $url = admin_url().'edit.php?post_type=aam-quotation';
+  ?>
+   <script>location.href='<?php echo $url;?>';</script>
+  <?php
+}
+function wpaam_render_new_quotation(){
+  $url = admin_url().'post-new.php?post_type=aam-quotation';
+  ?>
+  <script>location.href='<?php echo $url;?>';</script>
+  <?php
 }
 
-/*-----------------------------------------------------------------------------------*/
-/* Project Mgmt. Title Field Label
-/*-----------------------------------------------------------------------------------*/
-
-add_filter( 'enter_title_here', 'aam_quotation_mgmt_title_field_label', 10, 1 );
-
-function aam_quotation_mgmt_title_field_label( $title ) {
-
-	$screen = get_current_screen();
-
-	if ( 'aam-quotation' == $screen->post_type ) {
-
-		$quotation       = get_post_type_object( 'aam-quotation' );
-		$quotation_label = $quotation->labels->singular_name;
-
-		$title = $quotation_label . __( ' Title', 'quotation-mgmt' );
-
-	}
-
-	return $title;
-
-}
 
 /*----------------------------------------------------------------------------*/
 /* Project Mgmt. Post Thumbnail
 /*----------------------------------------------------------------------------*/
 
-add_action( 'init', 'aam_quotation_mgmt_post_thumbnail', 10 );
+// add_action( 'init', 'aam_quotation_mgmt_post_thumbnail', 10 );
 
-function aam_quotation_mgmt_post_thumbnail() {
+// function aam_quotation_mgmt_post_thumbnail() {
 
-	if ( !current_theme_supports( 'post-thumbnails' ) ) { // if the currently active theme does not support post-thumbnails
+// 	if ( !current_theme_supports( 'post-thumbnails' ) ) { // if the currently active theme does not support post-thumbnails
 
-		add_theme_support( 'post-thumbnail', array( 'aam-quotation' ) ); // add theme support for post-thumbnails for the custom post type only
+// 		add_theme_support( 'post-thumbnail', array( 'aam-quotation' ) ); // add theme support for post-thumbnails for the custom post type only
 
-	}
+// 	}
 
-}
+// }

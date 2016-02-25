@@ -948,6 +948,55 @@ function wpaam_get_quotations_tab_url( $tab ) {
 
 }
 
+/////////////////////////////////////////////////////////// Invoices Page tabs & settings  /////////////////////////////
+
+// generate tabs for invoices page
+function wpaam_get_invoices_page_tabs() {
+	$tabs = array();
+
+	$tabs['list'] = array(
+		'id'    => 'list',
+		'title' => __('Invoices List', 'wpaam'),
+	);
+	$tabs['edit'] = array(
+		'id'    => 'edit',
+		'title' => __('Create Invoices', 'wpaam'),
+	);
+	return apply_filters( 'wpaam_get_invoices_page_tabs', $tabs );	
+}
+
+function wpaam_get_current_invoices_tab() {
+
+	$tab = ( get_query_var( 'invoice_tab' ) ) ? get_query_var( 'invoice_tab' ) : null;
+	return $tab;
+	
+}
+
+function wpaam_invoices_tab_exists( $tab ) {
+
+	$exists = false;
+
+	if ( array_key_exists( $tab, wpaam_get_invoices_page_tabs() ) )
+		$exists = true;
+
+	return $exists;
+
+}
+
+function wpaam_get_invoices_tab_url( $tab ) {
+
+	if( get_option( 'permalink_structure' ) == '' ) :
+		$tab_url = add_query_arg( 'invoice_tab', $tab, wpaam_get_core_page_url( 'invoices' ) );
+	else :
+		$tab_url = wpaam_get_core_page_url( 'invoices' ) . $tab;
+	endif;
+
+	return esc_url( $tab_url );
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function wpaam_is_func_disabled( $function ) {
@@ -1235,10 +1284,10 @@ function wpaam_is_multi_array( $array ) {
 //get the vat vales from database tables
 function wpaam_get_vat_values( ) { 
 	
-	// $vat_values  = array('5'=>5,'10'=>10,'15'=>15,'20'=>20,'25'=>25,'30'=>30,'35'=>35,'40'=>40,'45'=>45,'50'=>50,'55'=>55,'60'=>60,'65'=>65,'70'=>70,'75'=>75,'80'=>80,'90'=>90,'100'=>100);
+	
 	global $wpdb;
 	$user_id = get_current_user_id(); 
-	$vat_values = get_posts( array('orderby' => 'date' , 'post_type' => 'aam-vat' , 'author' => $user_id) ); 
+	$vat_values = get_posts( array('orderby' => 'date' , 'post_type' => 'aam-vat') ); 
 	//echo "<pre>"; print_r($vat_values); die("testing");
 	return apply_filters( 'wpaam_get_vat_values', $vat_values );
 	

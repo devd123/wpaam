@@ -44,8 +44,11 @@
 				<label for="product_vat">Product VAT </label>
 				<div class="field">
 				<input type="text" required="" value="<?php echo $auther_selected_vat.'%'; ?>" placeholder="" id="product_vat" name="product_vat" class="input-vat" disabled>
+				<input type="hidden" value="<?php echo $auther_selected_vat; ?>" placeholder="" id="product_vat" name="product_vat"/>
 				</div>
 			</fieldset>	
+			<?php else :?>
+				<input type="hidden" value="0" placeholder="" id="product_vat" name="product_vat"/>
 			<?php endif; ?>
 			<?php wp_nonce_field( $form ); ?>
 			<p class="wpaam-submit">

@@ -54,7 +54,7 @@
 					<label for="product_vat">VAT Values</label>
 					<div class="field">
 						<select name="user_vat_values" id="user_vat_values" class="select-vat-values">
-							<option value="0">Select Tax Values</option>
+							<option value="0">Select VAT Value</option>
 							<?php 
 							$vat_values =  wpaam_get_vat_values();
 

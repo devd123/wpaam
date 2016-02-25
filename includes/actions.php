@@ -23,6 +23,11 @@ function wpaam_add_aamuser_capability() {
 	$aamuserrole->add_cap('edit_quotation');
 	$aamuserrole->add_cap('delete_quotation');
 	$aamuserrole->add_cap('read_quotation');
+	$aamuserrole->add_cap('publish_invoice');
+	$aamuserrole->add_cap('edit_invoices');
+	$aamuserrole->add_cap('edit_invoice');
+	$aamuserrole->add_cap('delete_invoice');
+	$aamuserrole->add_cap('read_invoice');
     //echo "<pre>"; print_r($aamuserrole); die;
    
     // This only works, because it accesses the class instance.

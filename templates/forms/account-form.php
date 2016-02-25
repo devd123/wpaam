@@ -8,8 +8,7 @@
 	$company_logo = get_user_meta( $user_id, 'company_logo', true );
 	$description = get_user_meta( $user_id, 'description', true );
 	$first_name   = get_user_meta( $user_id, 'first_name', true );
-	$last_name  = get_user_meta( $user_id, 'last_name', true ); 
-	$family_name  = get_user_meta( $user_id, 'family_name', true ); 
+	$family_name  = get_user_meta( $user_id, 'last_name', true ); 
 	$client_prefix  = get_user_meta( $user_id, 'client_prefix', true ); 
 							
 ?>
@@ -19,14 +18,14 @@
 	<form id="wpaam-account" name="wpaam-account" method="post" action="" class="wpaam-profile-form">
 			 	
 			 	<fieldset  class="fieldset-user_name">
-					<label for="user_name">User Name <span class="wpaam-required-star">*</span></label>
+					<label for="user_name">User Name </label>
 					<div class="field required-field">
 						<input type="text" value="<?php if ( isset($user) ) echo $user->user_login; ?>" placeholder="" id="user_name" name="user_name" class="input-name" disabled>
 					</div> 
 				</fieldset>
 
 			 	<fieldset  class="fieldset-company_name"> 
-					<label for="company_name">Company Name <span class="wpaam-required-star">*</span></label>
+					<label for="company_name">Company Name </label>
 					<div class="field required-field">
 						<input type="text" value="<?php if ( isset($company_name) ) echo $company_name; ?>" placeholder="" id="company_name" name="company_name" class="input-name">
 					</div>
@@ -52,13 +51,6 @@
 					<label for="first_name">First Name </label>
 					<div class="field">
 						<input type="text" value="<?php if ( $first_name ) echo $first_name; ?>" placeholder="" id="first_name" name="first_name" class="input-name">
-					</div>
-				</fieldset>
-
-				<fieldset class="fieldset-last_name">
-					<label for="last_name"> Last Name</label>
-					<div class="field">
-						<input type="text" value="<?php if ( $last_name ) echo $last_name; ?>" placeholder="" id="last_name" name="last_name" class="input-name">
 					</div>
 				</fieldset>
 

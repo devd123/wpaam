@@ -77,14 +77,7 @@ add_action( 'wpaam_before_account', 'wpaam_add_account_tabs', 10, 6 );
 // Display content of the first tab into the account page.
 function wpaam_show_account_edit_form( $current_tab, $all_tabs, $form, $fields, $user_id, $atts ) {
 
-	get_wpaam_template( 'forms/account-form.php',
-		array(
-			'atts'    => $atts,
-			'form'    => $form,
-			'fields'  => $fields,
-			'user_id' => $user_id
-		)
-	);
+	echo WPAAM()->forms->get_form( 'profile' );
 
 }
 add_action( 'wpaam_account_tab_details', 'wpaam_show_account_edit_form', 10, 6 );
@@ -203,6 +196,36 @@ function wpaam_show_quotations_edit_form( $current_tab, $all_tabs, $form, $field
 	echo WPAAM()->forms->get_form( 'edit-quotation' );
 }
 add_action( 'wpaam_quotations_tab_edit', 'wpaam_show_quotations_edit_form', 10, 6 );
+
+////////////////////////////////////////////////////////////////// Invoices Tabs ///////////////////////////////
+
+// Adds tabs navigation on top of the invoices page.
+function wpaam_add_invoices_tabs( $current_tab, $all_tabs, $form, $fields, $user_id, $atts ) {
+
+	get_wpaam_template( "invoices-tabs.php", array( 'tabs'  => wpaam_get_invoices_page_tabs(), 'current_tab' => $current_tab, 'all_tabs' => $all_tabs ) );
+
+}
+add_action( 'wpaam_before_invoices', 'wpaam_add_invoices_tabs', 10, 6 );
+
+// First tab of the invoices page.
+function wpaam_show_invoices_list( $current_tab, $all_tabs, $form, $fields, $user_id, $atts ) {
+	
+	get_wpaam_template( 'invoices-list.php',
+		array(
+			'atts'    => $atts,
+			'fields'  => $fields,
+			'user_id' => $user_id
+		)
+	);
+}
+add_action( 'wpaam_invoices_tab_list', 'wpaam_show_invoices_list', 10, 6 );
+
+// Second tab of the invoices page.
+function wpaam_show_invoices_edit_form( $current_tab, $all_tabs, $form, $fields, $user_id, $atts ) {
+	
+	echo WPAAM()->forms->get_form( 'edit-invoice' );
+}
+add_action( 'wpaam_invoices_tab_edit', 'wpaam_show_invoices_edit_form', 10, 6 );
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

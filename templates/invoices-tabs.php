@@ -18,7 +18,7 @@
 
 		<?php foreach ( $tabs as $key => $tab ) : ?>
 			<li class="wpaam-form-tab tab-<?php echo $key; ?> <?php echo $current_tab == $key || $current_tab == null && $all_tabs[0] == $key ? 'active' : ''?>">
-				<a href="<?php echo esc_url( wpaam_get_quotations_tab_url( $tab['id'] ) ); ?>"><?php echo $tab['title']; ?></a>
+				<a href="<?php echo esc_url( wpaam_get_invoices_tab_url( $tab['id'] ) ); ?>"><?php echo $tab['title']; ?></a>
 			</li>
 		<?php endforeach; ?>
 

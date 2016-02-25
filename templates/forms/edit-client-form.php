@@ -42,28 +42,28 @@
 		<form action="#" method="post" id="wpaam-clients" class="wpaam-profile-form" name="wpaam-clients" enctype="multipart/form-data">
 
 			<fieldset data-name="civilite" data-required="1" data-label="Name" data-type="text" class="fieldset-civilite">
-				<label for="civilite"><?php _e('Civilite', 'wpaam'); ?></label>
+				<label for="civilite"><?php _e('Civilite', 'wpaam'); ?><span class="wpaam-required-star">*</span></label>
 				<div class="field required-field">
 				<input class="text-input" name="civilite" type="text" id="civilite" value="<?php if ( !empty($civilite) ) echo $civilite; ?>" required=""/>
 				</div>
 			</fieldset>
 
 			<fieldset data-name="first_name" data-required="1" data-label="Name" data-type="text" class="fieldset-first_name">
-				<label for="first_name"><?php _e('First Name', 'wpaam'); ?></label>
+				<label for="first_name"><?php _e('First Name', 'wpaam'); ?><span class="wpaam-required-star">*</span></label>
 				<div class="field required-field">
 				<input class="text-input" name="first_name" type="text" id="first_name" value="<?php if ( !empty($firstname) ) echo $firstname; ?>" required=""/>
 				</div>
 			</fieldset>
 			
 			<fieldset data-name="last_name" data-required="1" data-label="Name" data-type="text" class="fieldset-last_name">
-				<label for="last_name"><?php _e('Last Name', 'wpaam'); ?></label>
+				<label for="last_name"><?php _e('Last Name', 'wpaam'); ?><span class="wpaam-required-star">*</span></label>
 				<div class="field required-field">
 				<input class="text-input" name="last_name" type="text" id="last_name" value="<?php if ( !empty($lastname) ) echo $lastname; ?>" required=""/>
 				</div>
 			</fieldset>
 
 			<fieldset data-name="company_name" data-required="1" data-label="Name" data-type="text" class="fieldset-post_title">
-				<label for="company_name"><?php _e('Company name', 'wpaam'); ?></label>
+				<label for="company_name"><?php _e('Company name', 'wpaam'); ?><span class="wpaam-required-star">*</span></label>
 				<div class="field required-field">
 				<input class="text-input" name="company_name" type="text" id="company_name" value="<?php if ( !empty($company_name) ) echo $company_name; ?>" required=""/>
 				</div>
@@ -105,14 +105,14 @@
 			</fieldset>
 
 			<fieldset data-name="phone" data-required="1" data-label="Name" data-type="text" class="fieldset-phone">
-				<label for="phone"><?php _e('Phone', 'wpaam'); ?></label>
+				<label for="phone"><?php _e('Phone', 'wpaam'); ?><span class="wpaam-required-star">*</span></label>
 				<div class="field required-field">
 				<input class="text-input" name="phone" type="text" id="phone" value="<?php if ( !empty($phone) ) echo $phone; ?>" required=""/>
 				</div>
 			</fieldset>
 
 			<fieldset data-name="client_email" data-required="1" data-label="Email" data-type="text" class="fieldset-post_title">
-				<label for="email"><?php _e('E-mail', 'wpaam'); ?></label>
+				<label for="email"><?php _e('E-mail', 'wpaam'); ?><span class="wpaam-required-star">*</span></label>
 				<div class="field required-field">
 				<input class="text-input" name="client_email" type="email" id="client_email" value="<?php if ( !empty($client_email) ) echo $client_email;?>" required=""/>
 				</div>
