@@ -62,7 +62,7 @@
 			<fieldset data-name="payment_date" data-required="1"  data-type="text" class="fieldset-payment_date">
 				<label for="payment_date">Payment Date <span class="wpaam-required-star">*</span></label>
 				<div class="field required-field">
-					<input type="text" required value="<?php if ( !empty($payment_date) ) echo $payment_date; ?>" placeholder="" id="payment_date" name="payment_date" class="input">
+					<input type="text" required value="<?php if ( !empty($payment_date) ) echo $payment_date; ?>" placeholder="" id="datepicker" name="payment_date" class="input">
 				</div>
 			</fieldset>
 
@@ -86,5 +86,5 @@
 		</p><!-- .alert -->
 
 	<?php endif; ?>
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>	

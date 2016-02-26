@@ -7,13 +7,13 @@
 
 	<table class="wp-list-table" colspam="">
   		<thead>
-	  		<th width="10%">S.N.</th>
+	  		<th>Number</th>
 	  		<th>Company</th>
 	  		<th>Client</th>
 	  		<th>Payment Date</th>
 	  		<th>Total</th>
 	  		<th>Created</th>
-	  		<!-- <th>Action</th> -->
+	  		<th width="10%">Act</th>
   		</thead>
 	<?php
 		global $wpdb;
@@ -31,14 +31,17 @@
 		<tbody>
   			
 		  	<tr id="<?php echo get_the_ID();?>">
-			    <td><?php echo $number; ?></td>   
+			    <td><?php echo get_post_meta( get_the_ID(), 'invoice_number' , true ); ?></td> 
 			    <td><?php echo get_user_meta( $client_id, 'company_name' , true); ?></td>
 			    <td><?php echo get_user_meta( $client_id, 'first_name' , true);?></td>
 			    <td><?php echo get_post_meta( get_the_ID(), 'payment_date' , true ); ?></td>
 			    <td><?php echo get_post_meta( get_the_ID(), 'invoice_total' , true ); ?></td>
 			    <td><?php echo get_the_date('Y-m-d',get_the_ID()); ?></td>
-			   <!--  <td><a href="<?php echo esc_url( get_permalink( get_page_by_title( 'Invoices' ) ) ).'&invoice_tab=edit&invoice_id='.$quotationid; ?>"><span>Edit</span></a>|
-			    <span><a href="javascript:void()" class="del-rpoduct">Delete</span></td> -->
+			  	<td width="20%"><a href="<?php echo esc_url( get_permalink( get_page_by_title( 'Invoices' ) ) ).'&invoice_tab=edit&invoice_id='.get_the_ID(); ?>">
+				    <img src="<?php echo WPAAM_PLUGIN_URL.'images/setting.png';?>"></a>
+				    <img src="<?php echo WPAAM_PLUGIN_URL.'images/preview.png';?>"> 
+				    <img src="<?php echo WPAAM_PLUGIN_URL.'images/notes.png';?>">
+			    </td> 
 	      	<?php $number++;  ?>
 		   </tr>
 	   </tbody> 		

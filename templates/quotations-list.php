@@ -14,13 +14,12 @@
 	<?php elseif ( is_user_logged_in() && current_user_can( 'edit_quotation' ) && current_user_can( 'publish_quotation' ) ) : ?>
 	<table class="wp-list-table" colspam="">
   		<thead>
-	  		<th width="10%">S.N.</th>
+	  		<th>Number</th>
 	  		<th>Company</th>
 	  		<th>Client</th>
-	  		<th>Product</th>
-	  		<th>Price</th>
-	  		<th>Date</th>
-	  		<th>Action</th>
+	  		<th>total</th>
+	  		<th>Created</th>
+	  		<th width="10%">Act</th>
   		</thead>
 		
 	<?php
@@ -32,18 +31,21 @@
 		if ( $query->have_posts() ) : 
 			$number = 1;
 			while ( $query->have_posts() ) : $query->the_post(); 
-			$quotationid = get_the_ID(); ?>
+			$client_id = get_post_meta( get_the_ID(), 'client' , true);
+		?>
 		<tbody>
   			
 		  	<tr id="<?php echo get_the_ID();?>">
-			    <td><?php echo $number; ?></td> 
-			     <td><?php echo get_user_meta( $author, 'company_name' , true); ?></td>  
-			    <td><?php echo get_post_meta( get_the_ID(), 'client_name' , true); ?></td>
-			    <td><?php echo get_post_meta( get_the_ID(), 'product_name' , true); ?></td>
-			    <td><?php echo get_post_meta( get_the_ID(), 'quotation_price' , true ); ?></td>
+			    <td><?php echo get_post_meta( get_the_ID(), 'quotation_number' , true); ?></td>
+			    <td><?php echo get_user_meta( $client_id, 'company_name' , true); ?></td>  
+			    <td><?php echo get_user_meta( $client_id, 'first_name' , true);?></td>
+			    <td><?php echo get_post_meta( get_the_ID(), 'quotation_total' , true ); ?></td>
 			    <td><?php echo get_the_date('Y-m-d',get_the_ID()); ?></td>
-			    <td><a href="<?php echo esc_url( get_permalink( get_page_by_title( 'Quotations' ) ) ).'&quotation_tab=edit&quotation_id='.$quotationid; ?>"><span>Edit</span></a>|
-			    <!-- <span><a href="javascript:void()" class="del-rpoduct">Delete</span></td> -->
+			   <td width="20%"><a href="<?php echo esc_url( get_permalink( get_page_by_title( 'Quotations' ) ) ).'&quotation_tab=edit&quotation_id='.get_the_ID(); ?>">
+			   <img src="<?php echo WPAAM_PLUGIN_URL.'images/setting.png';?>"></a>
+			   <img src="<?php echo WPAAM_PLUGIN_URL.'images/preview.png';?>"> 
+			   <img src="<?php echo WPAAM_PLUGIN_URL.'images/notes.png';?>">
+			   </td> 
 	      	<?php $number++;  ?>
 		   </tr>
 	   </tbody> 		

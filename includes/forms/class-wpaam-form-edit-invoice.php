@@ -71,10 +71,10 @@ class WPAAM_Form_Edit_Invoice extends WPAAM_Form {
 		}
 
 		// Validate required
-		// if ( is_wp_error( ( $return = self::validate_invoice_fields(  ) ) ) ) {
-		// 	self::add_error( $return->get_error_message() );
-		// 	return;
-		// }
+		if ( is_wp_error( ( $return = self::validate_invoice_fields(  ) ) ) ) {
+			self::add_error( $return->get_error_message() );
+			return;
+		}
 
 			
 			$products = esc_attr($_POST['multi_products']);
@@ -92,6 +92,7 @@ class WPAAM_Form_Edit_Invoice extends WPAAM_Form {
 
 			// Add the content of the form to $post as an array
 			$title =  self::$user->user_login.'_'.time();
+			
 			$invoice_data = array(
 				'post_title' 	=> $title,
 				'client' 	    => esc_attr($_POST['client']),
@@ -105,6 +106,10 @@ class WPAAM_Form_Edit_Invoice extends WPAAM_Form {
 			//echo "<pre>"; print_r($invoice_data); die;
 
 			$new_invoice_id = wp_insert_post( $invoice_data ); 
+			// get invoice_start number of the aam user
+			$inv_number = get_user_meta(self::$user->ID , 'invoice_start' , true).$new_invoice_id;
+			//updadate invoice post meta
+			update_post_meta ( $new_invoice_id, 'invoice_number', $inv_number );
 	        update_post_meta ( $new_invoice_id, 'client', $invoice_data['client'] );
 	        update_post_meta ( $new_invoice_id, 'products', $invoice_data['products'] );
 	        update_post_meta ( $new_invoice_id, 'payment_date', $invoice_data['payment_date'] );

@@ -623,25 +623,5 @@ div.wpaam-message {
   margin-top: 1rem; }
 
 /* Auto Product Filter */
-.ui-widget-content {
-    border: 1px solid #aaaaaa;
-    background: #ffffff url("../images/ui-bg_flat_75_ffffff_40x100.png") 50% 50% repeat-x;
-    color: #222222;
-}
-.ui-menu {
-    list-style: none;
-    padding: 10px;
-    margin: 0;
-    display: block;
-    outline: none;
-}
-.ui-autocomplete {
-    position: absolute;
-    top: 0;
-    left: 0;
-    cursor: default;
-}
-.ui-front {
-    z-index: 100;
-}
+
 /*# sourceMappingURL=wp_user_manager_frontend.css.map */

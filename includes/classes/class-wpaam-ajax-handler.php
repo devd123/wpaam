@@ -41,6 +41,9 @@ class wpaam_Ajax_Handler {
 		// Get product price 
 		add_action( 'wp_ajax_wpaam_get_product_price', array( $this, 'get_product_price' ) );
 
+		// Get product price 
+		add_action( 'wp_ajax_wpaam_my_delete_post', array( $this, 'my_delete_post' ) );
+
 	}
 
 	/**
@@ -260,6 +263,21 @@ class wpaam_Ajax_Handler {
 		$price = get_post_meta($id , 'product_price' , true);
 		echo $price;
 		wp_die();
+	}
+
+	function my_delete_post(){
+		
+		$permission = check_ajax_referer( 'my_delete_post_nonce', 'nonce', false );
+		if( $permission == false ) {
+			echo 'error';
+		}
+		else {
+			wp_delete_post( $_REQUEST['id'] );
+			echo 'success';
+		}
+
+		die();
+
 	}
 
 }

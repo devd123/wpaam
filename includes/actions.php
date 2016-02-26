@@ -37,8 +37,6 @@ function wpaam_add_aamuser_capability() {
 add_action( 'admin_init', 'wpaam_add_aamuser_capability');
 
 
-
-
 function wpaam_restrict_wp_register() {
 
 	if ( wpaam_get_option( 'wp_login_signup_redirect' ) ):

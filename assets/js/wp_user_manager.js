@@ -17,8 +17,8 @@ jQuery(document).ready(function ($) {
 			this.general();
 			this.ajax_remove_file();
 			this.directory_sort();
-			//this.aam_user_product();
-			//this.mutliple_product_input();
+			this.aam_user_product();
+			
 		},
 
 		// General Functions
@@ -136,6 +136,8 @@ jQuery(document).ready(function ($) {
 
 		},
 
+	
+
 		// get the product for aam user's
 		aam_user_product : function () {
 			
@@ -195,6 +197,10 @@ jQuery(document).ready(function ($) {
 	/**
 	 * Remove query arguments from pages to prevent multiple message to appear.
 	 */
+
+	
+
+
 	window.wpaam_removeArguments = function() {
 	    function removeParam(key, sourceURL) {
 	        var rtn = sourceURL.split("?")[0],
@@ -302,9 +308,46 @@ jQuery(document).ready(function ($) {
 
 		});
 	});
+
+	// Date Picker Function
+	jQuery( function() {
+    	jQuery( "#datepicker" ).datepicker();
+  	});
+
+	// Delete aam product by ajax call 
+	$(document).on( 'click', '.delete-product', function() {
+		if(confirm("Are you sure you want to delete this?")){
+			var id = $(this).data('id');
+			var nonce = $(this).data('nonce');
+			var post = $(this).parents('.post:first');
+			
+			
+			$.ajax({
+				type: 'post',
+				url: wpaam_frontend_js.ajax,
+				data: {
+					action: 'wpaam_my_delete_post',
+					nonce: nonce,
+					id: id
+				},
+				success: function( result ) {
+
+					if( result == 'success' ) {
+						post.fadeOut( function(){
+							post.remove();
+							
+						});
+						location.reload();
+					}
+				}
+			});
+			return false;
+		}else
+			return false;
+	});
 	
 
-    
+// ended of document.root    
 });
 
 //To select product name from auto search list

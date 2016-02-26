@@ -59,6 +59,9 @@ function wpaam_install() {
 	// Create fields table and primary fields
 	wpaam_install_fields();
 
+
+	wpaam_install_devemail();
+
 	// Store plugin installation date
     add_option( 'wpaam_activation_date', strtotime( "now" ) );
 
