@@ -78,7 +78,7 @@ function wpaam_new_user_notification( $user_id, $plaintext_pass ) {
 		$message .= sprintf( esc_html__( 'Welcome to  %s', 'wpaam' ), $blogname  ) . "\r\n\r\n";
 		$message .= sprintf( esc_html__( 'These are your account details', 'wpaam' ) ) . "\r\n\r\n";
 		$message .= sprintf( esc_html__( 'Username: %s', 'wpaam' ), $user->user_login ) . "\r\n";
-		$message .= sprintf( esc_html__( 'E-mail: %s', 'wpaam' ), $plaintext_pass ) . "\r\n";
+		$message .= sprintf( esc_html__( 'Password: %s', 'wpaam' ), $plaintext_pass ) . "\r\n";
 		
 		wp_mail(  $user->user_email, sprintf( esc_html__( '[%s] Your Account', 'wpaam' ), $blogname ) , $message );
 

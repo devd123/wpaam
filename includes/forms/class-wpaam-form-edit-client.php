@@ -94,7 +94,7 @@ class WPAAM_Form_Edit_Client extends WPAAM_Form {
 
 		// Proceed to update the password
 		$prefix = get_user_meta(self::$user->ID , 'client_prefix' , true);
-		$user_name = $prefix.'_',esc_attr($_POST['first_name']).'_'.time(); 
+		$user_name = $prefix.'_'.esc_attr($_POST['civilite']); 
 		$user_pass = wp_generate_password();
 		
 		$userdata = array(
@@ -115,9 +115,9 @@ class WPAAM_Form_Edit_Client extends WPAAM_Form {
 		);		
 			//print_r($userdata); die;		
 		
-		$newuser_id = wp_insert_user( $userdata ); 
-		wpaam_new_user_notification( $newuser_id, $user_pass );
-			
+			$newuser_id = wp_insert_user( $userdata ); 
+		
+			// update client usermeta data
 			update_user_meta( $newuser_id, 'parent_user', self::$user->user_login);
 			update_user_meta( $newuser_id, 'civilite', $userdata['civilite']);
 			update_user_meta( $newuser_id, 'company_name', $userdata['company_name']);
@@ -128,7 +128,17 @@ class WPAAM_Form_Edit_Client extends WPAAM_Form {
 			update_user_meta( $newuser_id, 'country', $userdata['country']);
 			update_user_meta( $newuser_id, 'phone', $userdata['phone']);
 			update_user_meta( $newuser_id, 'client_email', $userdata['client_email']);
-	
+			
+			// send email notification to aam user 
+			$message  = esc_html__( 'These are your client account details', 'wpaam' ). "\r\n\r\n";
+			$message .= sprintf( esc_html__( 'Email ID :  %s', 'wpaam' ), $userdata['client_email']  ) . "\r\n\r\n";
+			$message .= sprintf( esc_html__( 'Username :  %s', 'wpaam' ), $user_name  ) . "\r\n\r\n";
+			$message .= sprintf( esc_html__( 'Password : %s', 'wpaam' ), $user_pass ) . "\r\n\r\n";
+			
+			// More headers
+			//$headers .= 'From: <webmaster@example.com>'. "\r\n";
+			$headers .= 'Cc: '.self::$user->user_email . "\r\n";
+			wp_mail( $userdata['client_email'] , 'WPAAM - Your Client Details' , $message , $headers);
 
 			if ( is_wp_error($newuser_id) ) {
 

@@ -132,18 +132,17 @@ class WPAAM_Form_Edit_Quotation extends WPAAM_Form {
 			return;
 		}
 
+		
 		$quotation_id = $_GET['quotation_id'];
 		// Add the content of the form to $post as an array
 		$quotation_data = array(
 			'ID'            	=> $quotation_id,
 			'products'    	=> esc_attr($_POST['multi_products']),
-			'quotation_total'   => esc_attr($_POST['quotation_price']),
 		
 		);
 
 		$updatequotation = wp_update_post( $quotation_data ); 
         update_post_meta ( $updatequotation, 'products', $quotation_data['products'] );
-        update_post_meta ( $updatequotation, 'quotation_total', $quotation_data['quotation_total'] );
 
         if ( is_wp_error( $updatequotation ) ) {
 

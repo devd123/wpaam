@@ -44,9 +44,13 @@ class WPAAM_Form_Edit_Invoice extends WPAAM_Form {
 		
 			
 		if ( !$_POST['client'] )
-			return new WP_Error( 'quotation-validation-error', __('A client name is required for create new quotation.', 'wpaam') );
+			return new WP_Error( 'invoice-validation-error', __('A client name is required for create new invlice.', 'wpaam') );
 		elseif ( !$_POST['multi_products'])
-			return new WP_Error( 'quotation-validation-error', __( 'A product is required for create new quotation.', 'wpaam' ) );
+			return new WP_Error( 'invoice-validation-error', __( 'product is required for create new invoice.', 'wpaam' ) );
+		elseif ( !$_POST['status'])
+			return new WP_Error( 'invoice-validation-error', __( 'Status is required for create new invoice.', 'wpaam' ) );
+		elseif ( !$_POST['payment_date'])
+			return new WP_Error( 'invoice-validation-error', __( 'payment date is required for create new invoice.', 'wpaam' ) );
 		
 	}
 
@@ -98,6 +102,7 @@ class WPAAM_Form_Edit_Invoice extends WPAAM_Form {
 				'client' 	    => esc_attr($_POST['client']),
 				'products'    	=> esc_attr($_POST['multi_products']),
 				'payment_date'  => esc_attr($_POST['payment_date']),
+				'status'        => esc_attr($_POST['status']),
 				'invoice_total' => $total,
 				'post_author'   => self::$user->ID,
 				'post_status'   => 'publish', 
@@ -113,6 +118,7 @@ class WPAAM_Form_Edit_Invoice extends WPAAM_Form {
 	        update_post_meta ( $new_invoice_id, 'client', $invoice_data['client'] );
 	        update_post_meta ( $new_invoice_id, 'products', $invoice_data['products'] );
 	        update_post_meta ( $new_invoice_id, 'payment_date', $invoice_data['payment_date'] );
+	        update_post_meta ( $new_invoice_id, 'status', $invoice_data['status'] );
 	        update_post_meta ( $new_invoice_id, 'invoice_total', $invoice_data['invoice_total'] );
 
 	        if ( is_wp_error( $new_invoice_id ) ) {
@@ -137,22 +143,18 @@ class WPAAM_Form_Edit_Invoice extends WPAAM_Form {
 			return;
 		}
 
+
 		$invoice_id = $_GET['invoice_id'];
 		// Add the content of the form to $post as an array
 		$invoice_data = array(
 			'ID'            => $invoice_id,
-			'client' 	    => esc_attr($_POST['client']),
-			'products'    	=> esc_attr($_POST['multi_products']),
 			'payment_date'  => esc_attr($_POST['payment_date']),
-			'invoice_total' => $total,
-		
+			'status'        => esc_attr($_POST['status']),
 		);
 
 		$update_id = wp_update_post( $invoice_data ); 
-        update_post_meta ( $new_invoice_id, 'client', $invoice_data['client'] );
-        update_post_meta ( $new_invoice_id, 'products', $invoice_data['products'] );
-        update_post_meta ( $new_invoice_id, 'payment_date', $invoice_data['payment_date'] );
-        update_post_meta ( $new_invoice_id, 'invoice_total', $invoice_data['invoice_total'] );
+        update_post_meta ( $update_id, 'payment_date', $invoice_data['payment_date'] );
+        update_post_meta ( $update_id, 'status', $invoice_data['status'] );
 
         if ( is_wp_error( $update_id ) ) {
 

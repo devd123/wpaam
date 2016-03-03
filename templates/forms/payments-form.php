@@ -9,7 +9,7 @@
 	$user_allow_vat   = get_user_meta( $user_id, 'user_allow_vat', true );
 	$user_vat_values  = get_user_meta( $user_id, 'user_vat_values', true ); 
 	
-							
+if ( is_user_logged_in() && current_user_can( 'edit_invoice' ) && current_user_can( 'edit_quotation' ) ) : 							
 ?>
 
 <div id="wpaam-form-profile" class="wpaam-profile-form-wrapper">
@@ -66,7 +66,7 @@
 								else : 
 									$selected = '';
 								endif;
-							echo '<option '.$selected.' value='.$vat_value.'>' .$vat->post_title. '</option>';
+							echo '<option '.$selected.' value='.$vat_value.'>' .$vat->post_title.' ( '.$vat_value.'% ) </option>';
 							endforeach;?>
 						</select> 
 					</div>
@@ -81,3 +81,4 @@
 			 
 	</form>
 </div>
+<?php endif; ?>

@@ -9,7 +9,7 @@
 	$quotation_start   = get_user_meta( $user_id, 'quotation_start', true );
 	
 	
-							
+if ( is_user_logged_in() && current_user_can( 'edit_invoice' ) && current_user_can( 'edit_quotation' ) ) : 								
 ?>
 
 <div id="wpaam-form-profile" class="wpaam-profile-form-wrapper">
@@ -53,3 +53,4 @@
 			 
 	</form>
 </div>
+<?php endif; ?>

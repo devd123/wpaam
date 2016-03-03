@@ -20,13 +20,13 @@ foreach ( $wpaam_post_types as $post_type ) {
 }
 
 // Delete created pages
-$wpaam_pages = array( 'login_page', 'registration_page', 'account_page', 'profile_page', 'settings_page', 'clients_page', 'products_page', 'quotations_page', 'invoices_page', 'creditmemos_page' );
-foreach ( $wpaam_pages as $p ) {
-	$page = wpaam_get_option( $p, false );
-	if ( $page ) {
-		wp_delete_post( $page, false );
-	}
-}
+// $wpaam_pages = array( 'login_page', 'registration_page', 'account_page', 'settings_page', 'clients_page', 'products_page', 'quotations_page', 'invoices_page', 'creditmemos_page' );
+// foreach ( $wpaam_pages as $p ) {
+// 	$page = wpaam_get_option( $p, false );
+// 	if ( $page ) {
+// 		wp_delete_post( $page, false );
+// 	}
+// }
 
 // Delete options
 delete_option( 'wpaam_settings' );

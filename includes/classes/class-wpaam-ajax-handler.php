@@ -41,8 +41,20 @@ class wpaam_Ajax_Handler {
 		// Get product price 
 		add_action( 'wp_ajax_wpaam_get_product_price', array( $this, 'get_product_price' ) );
 
-		// Get product price 
+		// Delete product from the list 
 		add_action( 'wp_ajax_wpaam_my_delete_post', array( $this, 'my_delete_post' ) );
+
+		// Show Quotation preview 
+		add_action( 'wp_ajax_wpaam_quotation_preview', array( $this, 'quotation_preview' ) );
+
+		// Show Invoice preview 
+		add_action( 'wp_ajax_wpaam_invoice_preview', array( $this, 'invoice_preview' ) );
+
+		// Product autocomplete for quotation
+		add_action( 'wp_ajax_wpaam_get_autocomplete_product', array( $this, 'get_autocomplete_product' ) );
+
+		// Copy quotation copy to invoice
+		add_action( 'wp_ajax_wpaam_quotation_copy_invoice', array( $this, 'quotation_copy_invoice' ) );
 
 	}
 
@@ -243,9 +255,26 @@ class wpaam_Ajax_Handler {
 
 	}
 
+	public function get_autocomplete_product() {
+		
+		global $wpdb;
+		$term = $_REQUEST['keyword'];
+		$author_id = get_current_user_id();
+		$results = $wpdb->get_results( "SELECT post_name , post_title FROM $wpdb->posts WHERE post_type = 'aam-product' AND post_author = '$author_id' AND post_status = 'publish' AND post_name LIKE '$term%' ");
+		if(!empty($results)) { ?>
+		<ul style="list-style:none">
+		<?php foreach($results as $result) { ?>
+		<li onClick="selectProduct('<?php echo $result->post_name; ?>');"><?php echo $result->post_title; ?></li>
+		<?php } ?>
+		</ul>
+		<?php }
+		wp_die();
+	}
+
 	public function get_product_by_aamuser() {
 		
 		global $wpdb;
+		$post_title = array();
 		$author_id = get_current_user_id();
 		$results = $wpdb->get_results( "SELECT ID , post_title FROM $wpdb->posts WHERE post_type = 'aam-product' AND post_author = '$author_id' AND post_status = 'publish' ");
 		foreach ($results as $key => $value) {
@@ -278,6 +307,72 @@ class wpaam_Ajax_Handler {
 
 		die();
 
+	}
+
+	function quotation_preview() { 
+		$output = '';	
+		$qt_id = $_REQUEST['id'];
+		$client_id = get_post_meta( $qt_id, 'client' , true);
+		$output  = '<ul>';
+		$output .= '<li>Quotation Number : '.get_post_meta( $qt_id, "quotation_number" , true).'</li>';
+		$output .= '<li>Company Name: '. get_user_meta( $client_id, "company_name" , true) .'</li>';
+		$output .= '<li>Client Name : '. get_user_meta( $client_id, "first_name" , true) .' '.get_user_meta( $client_id, "last_name" , true).'</li>';
+		$output .= '<li>Total Price : '.get_post_meta( $qt_id, "quotation_total" , true).'</li>';
+		$output .= '<li>Created Date : '.get_the_date('Y-m-d',$qt_id).'</li>';
+		$output .= '</ul>';
+		echo $output;
+		wp_die();
+	}
+
+	function invoice_preview() { 
+		$output = '';	
+		$qt_id = $_REQUEST['id'];
+		$client_id = get_post_meta( $qt_id, 'client' , true);
+		$output  = '<ul>';
+		$output .= '<li>Invoice Number : '.get_post_meta( $qt_id, "invoice_number" , true).'</li>';
+		$output .= '<li>Company Name: '. get_user_meta( $client_id, "company_name" , true) .'</li>';
+		$output .= '<li>Client Name : '. get_user_meta( $client_id, "first_name" , true) .' '.get_user_meta( $client_id, "last_name" , true).'</li>';
+		$output .= '<li>Total Price : '.get_post_meta( $qt_id, "invoice_total" , true).'</li>';
+		$output .= '<li>Payment Date : '.get_post_meta( $qt_id, "payment_date" , true).'</li>';
+		$output .= '<li>Created Date : '.get_the_date('Y-m-d',$qt_id).'</li>';
+		$output .= '</ul>';
+		echo $output;
+		wp_die();
+	}
+
+	function quotation_copy_invoice() { 
+		$current_user = wp_get_current_user();
+		$title =  $current_user->user_login.'_'.time();
+		$qtid = $_REQUEST['qtid'];
+		$client_id = get_post_meta( $qtid, 'client' , true);
+		
+		$invoice_data = array(
+				'post_title' 	=> $title,
+				'client' 	    => $client_id,
+				'products'    	=> get_post_meta( $qtid, "products" , true),
+				'payment_date'  => 0,
+				'status'        => 'copied quotation',
+				'invoice_total' => get_post_meta( $qtid, "quotation_total" , true),
+				'post_author'   => $current_user->ID,
+				'post_status'   => 'publish', 
+				'post_type'     => 'aam-invoice',  
+		);
+		
+			$new_invoice_id = wp_insert_post( $invoice_data );  
+		
+			$inv_number = get_user_meta($current_user->ID , 'invoice_start' , true).$new_invoice_id;
+			update_post_meta ( $new_invoice_id, 'invoice_number', $inv_number );
+	        update_post_meta ( $new_invoice_id, 'client', $invoice_data['client'] );
+	        update_post_meta ( $new_invoice_id, 'products', $invoice_data['products'] );
+	        update_post_meta ( $new_invoice_id, 'payment_date', $invoice_data['payment_date'] );
+	        update_post_meta ( $new_invoice_id, 'status', $invoice_data['status'] );
+	        update_post_meta ( $new_invoice_id, 'invoice_total', $invoice_data['invoice_total'] );
+
+        if($new_invoice_id){
+        	echo $new_invoice_id;
+        }else
+        	echo "error";
+		wp_die();
 	}
 
 }

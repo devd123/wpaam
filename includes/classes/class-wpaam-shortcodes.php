@@ -257,7 +257,7 @@ class WPAAM_Shortcodes {
 		$all_tabs = array_keys( wpaam_get_clients_page_tabs() );
 
 		// Display template
-		if ( is_user_logged_in() ) :
+		if ( is_user_logged_in() && current_user_can( 'edit_product' ) ) :
 
 			get_wpaam_template( 'clients.php',
 				array(
@@ -267,7 +267,10 @@ class WPAAM_Shortcodes {
 					'all_tabs'    => $all_tabs
 				)
 			);
-	
+		
+		elseif (is_user_logged_in() && !current_user_can( 'edit_product' )) :
+			echo "You are not allowed to see this page";
+		
 		// Show login form if not logged in
 		else :
 
@@ -296,7 +299,9 @@ class WPAAM_Shortcodes {
 					'all_tabs'    => $all_tabs
 				)
 			);
-	
+		elseif (is_user_logged_in() && !current_user_can( 'edit_product' )) :
+			echo "You are not allowed to see this page";
+		
 		// Show login form if not logged in
 		else :
 
@@ -314,7 +319,7 @@ class WPAAM_Shortcodes {
 		$all_tabs_qt = array_keys( wpaam_get_quotations_page_tabs() );
 
 		// Display template
-		if ( is_user_logged_in() ) :
+		if ( is_user_logged_in() && current_user_can( 'edit_quotation' ) && current_user_can( 'publish_quotation' ) ) : 
 
 			get_wpaam_template( 'quotations.php',
 				array(
@@ -324,10 +329,14 @@ class WPAAM_Shortcodes {
 					'all_tabs'    => $all_tabs_qt
 				)
 			);
-	
+		
+		// Display Quotation list for client's
+		elseif (is_user_logged_in() && current_user_can('aam_client')) :
+		 	get_wpaam_template( 'client_quotations.php',
+				array('user_id' => $user->ID)
+			);
 		// Show login form if not logged in
 		else :
-
 			echo wpaam_login_form();
 
 		endif;
@@ -338,12 +347,13 @@ class WPAAM_Shortcodes {
 	public function wpaam_invoices($atts, $content = null) {
 		
 		$user = wp_get_current_user();
+		//echo $user->roles[0]; die;
 		//Get the tabs
 		$current_invoices_tab = wpaam_get_current_invoices_tab();
 		$all_tabs_inv = array_keys( wpaam_get_invoices_page_tabs() );
 
-		// Display template
-		if ( is_user_logged_in() ) :
+		// Display template for aam user's 
+		if ( is_user_logged_in() && current_user_can( 'edit_invoice' ) && current_user_can( 'publish_invoice' ) ) : 
 
 			get_wpaam_template( 'invoices.php',
 				array(
@@ -355,9 +365,13 @@ class WPAAM_Shortcodes {
 				)
 			);
 	
+		// Display Invoices list for client's
+		elseif (is_user_logged_in() && current_user_can('aam_client')) :
+		 	get_wpaam_template( 'client_invoices.php',
+				array('user_id' => $user->ID)
+			);
 		// Show login form if not logged in
 		else :
-
 			echo wpaam_login_form();
 
 		endif;

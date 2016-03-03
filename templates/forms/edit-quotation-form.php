@@ -9,9 +9,10 @@
 		if(isset( $_GET['quotation_id']) && !empty($_GET['quotation_id']) ) {
 			$quotation_id = $_GET['quotation_id'];
 			$quotation = get_post( $quotation_id );
-		 	$client_name = get_post_meta( $quotation->ID, 'client_name', true );
-		 	$product_name = get_post_meta( $quotation->ID, 'product_name', true );
-		 	$quotation_price = get_post_meta( $quotation->ID, 'quotation_price', true ); 
+		 	$client_id = get_post_meta( $quotation->ID, 'client', true );
+		 	$client_info = get_userdata($client_id);
+		 	$products = get_post_meta( $quotation->ID, 'products', true );
+		 	$quotation_price = get_post_meta( $quotation->ID, 'quotation_total', true ); 
 		} 
 
 	$auther_selected_vat  = get_user_meta( $author_id, 'user_vat_values', true ); 
@@ -36,29 +37,33 @@
 			<fieldset data-name="client_name" data-required="1"  data-type="text" class="fieldset-client_name">
 				<label for="client_name">Client Name<span class="wpaam-required-star">*</span></label>
 				<div class="field required-field">
-				<?php if( !empty($client_name) ) : ?>			
-					<input type="text" value="<?php echo $client_name; ?>" id="client_name" name="client_name" disabled/>
-				<?php else : ?>
+				<?php if(isset( $_GET['quotation_id']) && !empty($_GET['quotation_id']) ) : ?>
+				<input type="text" value="<?php if ( !empty($client_info) ) echo $client_info->display_name;?>" disabled>
+				<?php else : ?>	
 					<select id="client" name="client" class="select">
 					<option value="0">Select Client...</option>
-				<?php
+					<?php
   					// get the client list
 					$selected = '';
   					foreach ($clients as $client) : 
-					
+					if( $client_id == $clients->ID){
+						$selected = 'selected';
+					}else {
+						$selected = '';
+					}
     	   			echo '<option '.$selected.' value='.$client->ID.'>'.$client->display_name.'</option>';
        				endforeach; 
        				
-   				?>
+   					?>
    					</select>
-   				<?php endif; ?>
+   				<?php endif; ?>	
 				</div>
 			</fieldset>
 
-		 	<!-- <fieldset data-name="product_name" data-required="1"  data-type="text" class="fieldset-product_name">
-				<label for="product_name">Product Name <span class="wpaam-required-star">*</span></label>
+		 	<!-- <fieldset data-name="multi_products" data-required="1"  data-type="text" class="fieldset-multi_products">
+				<label for="multi_products">Product Name <span class="wpaam-required-star">*</span></label>
 				<div class="field required-field">
-					<input type="text" required="" value="<?php if ( !empty($product_name) ) echo $product_name; ?>" placeholder="" id="search_product" name="search_product" class="select">
+					<input type="text" required="" value="<?php if ( !empty($product_name) ) echo $product_name; ?>" placeholder="" id="search_product" name="multi_products" class="select">
 					<div id="suggesstion-box"></div>
 				</div>
 			</fieldset> -->
@@ -66,12 +71,12 @@
 		 	<fieldset data-name="multi_products" data-required="1"  data-type="text" class="fieldset-multi_products">
 				<label for="multi_products">Products <span class="wpaam-required-star">*</span></label>
 				<div class="field required-field ui-widget">
-				  <input type="text" required name="multi_products" id="multi_products" class="select_product">
+				  <input type="text" required name="multi_products" id="multi_products" class="select_product" value="<?php if ( !empty($products) ) echo $products;?>">
 				</div>
 			</fieldset>
 
-			<!-- <fieldset data-name="product_price" data-required="1"  data-type="text" class="fieldset-product_price">
-				<label for="product_price">Price <span class="wpaam-required-star">*</span></label>
+			<!-- <fieldset data-name="quotation_price" data-required="1"  data-type="text" class="fieldset-quotation_price">
+				<label for="quotation_price">Price <span class="wpaam-required-star">*</span></label>
 				<div class="field required-field">
 					<input type="text" required="" value="<?php if ( !empty($quotation_price) ) echo $quotation_price; ?>" placeholder="" id="quotation_price" name="quotation_price" class="quotation_price_selected">
 				</div>

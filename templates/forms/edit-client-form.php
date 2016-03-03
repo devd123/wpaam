@@ -72,35 +72,35 @@
 			<fieldset data-name="siret" data-required="1" data-label="Name" data-type="text" class="fieldset-siret">
 				<label for="siret"><?php _e('SIRET', 'wpaam'); ?></label>
 				<div class="field required-field">
-				<input class="text-input" name="siret" type="text" id="siret" value="<?php if ( !empty($siret) ) echo $siret; ?>" required=""/>
+				<input class="text-input" name="siret" type="text" id="siret" value="<?php if ( !empty($siret) ) echo $siret; ?>" />
 				</div>
 			</fieldset>
 
 			<fieldset data-name="street" data-required="1" data-label="Name" data-type="text" class="fieldset-street">
 				<label for="street"><?php _e('Street', 'wpaam'); ?></label>
 				<div class="field required-field">
-				<input class="text-input" name="street" type="text" id="street" value="<?php if ( !empty($street) ) echo $street; ?>" required=""/>
+				<input class="text-input" name="street" type="text" id="street" value="<?php if ( !empty($street) ) echo $street; ?>" />
 				</div>
 			</fieldset>
 
 			<fieldset data-name="zip_code" data-required="1" data-label="Name" data-type="text" class="fieldset-zip_code">
 				<label for="zip_code"><?php _e('Zip Code', 'wpaam'); ?></label>
 				<div class="field required-field">
-				<input class="text-input" name="zip_code" type="text" id="zip_code" value="<?php if ( !empty($zip_code) ) echo $zip_code; ?>" required=""/>
+				<input class="text-input" name="zip_code" type="text" id="zip_code" value="<?php if ( !empty($zip_code) ) echo $zip_code; ?>" />
 				</div>
 			</fieldset>
 
 			<fieldset data-name="city" data-required="1" data-label="Name" data-type="text" class="fieldset-city">
 				<label for="city"><?php _e('City', 'wpaam'); ?></label>
 				<div class="field required-field">
-				<input class="text-input" name="city" type="text" id="city" value="<?php if ( !empty($city) ) echo $city; ?>" required=""/>
+				<input class="text-input" name="city" type="text" id="city" value="<?php if ( !empty($city) ) echo $city; ?>" />
 				</div>
 			</fieldset>
 
 			<fieldset data-name="country" data-required="1" data-label="Name" data-type="text" class="fieldset-country">
 				<label for="country"><?php _e('Country', 'wpaam'); ?></label>
 				<div class="field required-field">
-				<input class="text-input" name="country" type="text" id="country" value="<?php if ( !empty($country) ) echo $country; ?>" required=""/>
+				<input class="text-input" name="country" type="text" id="country" value="<?php if ( !empty($country) ) echo $country; ?>" />
 				</div>
 			</fieldset>
 

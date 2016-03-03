@@ -19,6 +19,7 @@ jQuery(document).ready(function ($) {
 			this.directory_sort();
 			this.aam_user_product();
 			
+			
 		},
 
 		// General Functions
@@ -148,7 +149,7 @@ jQuery(document).ready(function ($) {
 					type: 'POST',
 					url: wpaam_frontend_js.ajax,
 					data: {
-						'action' : 'wpaam_get_product_by_aamuser', // Calls the ajax action
+						'action' : 'wpaam_get_autocomplete_product', // Calls the ajax action
 						'keyword' : search_product
 					},	
 					beforeSend: function(){
@@ -166,27 +167,27 @@ jQuery(document).ready(function ($) {
 		},
 
 		// get the product for aam user's
-		mutliple_product_input : function () {
+		// mutliple_product_input : function () {
 		
-		  	var maxField = 10; //Input fields increment limitation
-		    var addButton = $('.add_button'); //Add button selector
-		    var wrapper = $('.field_wrapper'); //Input field wrapper
-		    var fieldHTML = '<div><input type="text" name="multi_products[]" id="search_product" value=""/><a href="javascript:void(0);" class="remove_button" title="Remove field"><img src="remove-icon.png"/></a><div id="suggesstion-box"></div></div>'; //New input field html 
-		    var x = 1; //Initial field counter is 1
-		    $(addButton).click(function(){ //Once add button is clicked
-		        if(x < maxField){ //Check maximum number of input fields
-		            x++; //Increment field counter
-		            $(wrapper).append(fieldHTML); // Add field html
-		        }
-		    });
-		    $(wrapper).on('click', '.remove_button', function(e){ //Once remove button is clicked
-		        e.preventDefault();
-		        $(this).parent('div').remove(); //Remove field html
-		        x--; //Decrement field counter
-		    });
+		//   	var maxField = 10; //Input fields increment limitation
+		//     var addButton = $('.add_button'); //Add button selector
+		//     var wrapper = $('.field_wrapper'); //Input field wrapper
+		//     var fieldHTML = '<div><input type="text" name="multi_products[]" id="search_product" value=""/><a href="javascript:void(0);" class="remove_button" title="Remove field"><img src="remove-icon.png"/></a><div id="suggesstion-box"></div></div>'; //New input field html 
+		//     var x = 1; //Initial field counter is 1
+		//     $(addButton).click(function(){ //Once add button is clicked
+		//         if(x < maxField){ //Check maximum number of input fields
+		//             x++; //Increment field counter
+		//             $(wrapper).append(fieldHTML); // Add field html
+		//         }
+		//     });
+		//     $(wrapper).on('click', '.remove_button', function(e){ //Once remove button is clicked
+		//         e.preventDefault();
+		//         $(this).parent('div').remove(); //Remove field html
+		//         x--; //Decrement field counter
+		//     });
 
 
-		}
+		// }
 
 
 
@@ -344,6 +345,71 @@ jQuery(document).ready(function ($) {
 			return false;
 		}else
 			return false;
+	});
+
+	// Quotation Preview ajax callback 
+	$(document).on( 'click', '.qt_preview', function() {
+		
+			var id = $(this).attr('qid');
+			$.ajax({
+				type: 'post',
+				url: wpaam_frontend_js.ajax,
+				data: {
+					action: 'wpaam_quotation_preview',
+					id: id
+				},
+				success: function( result ) {
+
+					$("#dialog_box").html(result);
+					$( "#dialog_box" ).dialog();
+				}
+			});
+			return false;
+		
+	}); 
+
+	// quotatoin copy to invoice ajax callback 
+	$(document).on( 'click', '#quotation_copy', function() {
+		
+			var qtid = $(this).data('id');
+			$.ajax({
+				type: 'post',
+				url: wpaam_frontend_js.ajax,
+				data: {
+					action: 'wpaam_quotation_copy_invoice',
+					qtid  : qtid
+				},
+				success: function( res , error ) {
+					if(res){
+						alert("you have successfully create copy of quotation to invoice");
+						location.reload();	
+					}else
+						return false;
+				}
+			});
+			return false;
+		
+	});
+
+	// Invoice Preview ajax callback 
+	$(document).on( 'click', '.inv_preview', function() {
+		
+			var id = $(this).attr('invid');
+			$.ajax({
+				type: 'post',
+				url: wpaam_frontend_js.ajax,
+				data: {
+					action: 'wpaam_invoice_preview',
+					id: id
+				},
+				success: function( result ) {
+
+					$("#invoice_box").html(result);
+					$( "#invoice_box" ).dialog();
+				}
+			});
+			return false;
+		
 	});
 	
 

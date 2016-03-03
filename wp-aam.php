@@ -266,8 +266,8 @@ class WP_Adavance_Account_Manager {
 			require_once WPAAM_PLUGIN_DIR . 'includes/admin/dashboard-widget.php';
 
 			// Custom Fields Framework
-			if ( ! class_exists( 'Pretty_Metabox' ) )
-				require_once WPAAM_PLUGIN_DIR . 'includes/lib/wp-pretty-fields/wp-pretty-fields.php';
+			// if ( ! class_exists( 'Pretty_Metabox' ) )
+			// 	require_once WPAAM_PLUGIN_DIR . 'includes/lib/wp-pretty-fields/wp-pretty-fields.php';
 
 			// Load Tools Page
 			require_once WPAAM_PLUGIN_DIR . 'includes/admin/tools.php';

@@ -93,7 +93,7 @@ $clients = $my_users->get_results();
 
 			<?php } else { ?>
 			  <h2>No clients found</h2>
-			<? } //endif ?>
+			<?php } //endif ?>
 			</div><!-- .client-list -->
 
 	<nav id="nav-single" style="clear:both; float:none; margin-top:20px;">

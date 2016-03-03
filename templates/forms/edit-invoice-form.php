@@ -9,9 +9,11 @@
 		if(isset( $_GET['invoice_id']) && !empty($_GET['invoice_id']) ) {
 			$quotation_id = $_GET['invoice_id'];
 			$quotation = get_post( $quotation_id );
-		 	$client_name = get_post_meta( $quotation->ID, 'client_name', true );
-		 	$product_name = get_post_meta( $quotation->ID, 'product_name', true );
-		 	$quotation_price = get_post_meta( $quotation->ID, 'quotation_price', true ); 
+		 	$client_id = get_post_meta( $quotation->ID, 'client', true );
+		 	$client = get_userdata($client_id);
+		 	$products = get_post_meta( $quotation->ID, 'products', true );
+		 	$status = get_post_meta( $quotation->ID, 'status', true ); 
+		 	$payment_date = get_post_meta( $quotation->ID, 'payment_date', true ); 
 		} 
 
 	$auther_selected_vat  = get_user_meta( $author_id, 'user_vat_values', true ); 
@@ -33,29 +35,43 @@
 
 		<form id="wpaam-invoices" name="wpaam-invoices" method="post" action="" class="wpaam-profile-form">
 		 	<input type="hidden" id="author_id" name="author_id" value="<?php echo $author_id;?>">
+			
+
 			<fieldset data-name="client_name" data-required="1"  data-type="text" class="fieldset-client_name">
 				<label for="client_name">Client Name<span class="wpaam-required-star">*</span></label>
 				<div class="field required-field">
-				<?php if( !empty($client_name) ) : ?>			
-					<input type="text" value="<?php echo $client_name; ?>" id="client_name" name="client_name" disabled/>
-				<?php else : ?>
-				<select id="client" name="client" class="select">
-					<option value="0">Select Client...</option>
-				<?php
-  					// get the client list
-  					foreach ($clients as $client) : 
-    	   			echo '<option value='.$client->ID.'>'.$client->display_name.'</option>';
-       				endforeach; 
-   				?>
-				</select>
-   				<?php endif; ?>
+					<?php if(isset( $_GET['invoice_id']) && !empty($_GET['invoice_id']) ) : ?>
+						<input type="text" value="<?php if ( !empty($client) ) echo $client->display_name;?>" disabled>
+					<?php else : ?>	
+					<select id="client" name="client" class="select">
+						<option value="0">Select Client...</option>
+					<?php
+	  					// get the client list
+	  					foreach ($clients as $client) : 
+	    	   			echo '<option value='.$client->ID.'>'.$client->display_name.'</option>';
+	       				endforeach; 
+	   				?>
+					</select>
+					<?php endif; ?>
 				</div>
 			</fieldset>
 
 		 	<fieldset data-name="multi_products" data-required="1"  data-type="text" class="fieldset-multi_products">
 				<label for="multi_products">Product Name <span class="wpaam-required-star">*</span></label>
 				<div class="field required-field ui-widget">
+				<?php if(isset( $_GET['invoice_id']) && !empty($_GET['invoice_id']) ) : ?>
+					<input type="text" value="<?php if ( !empty($products) ) echo $products;?>" disabled>
+				<?php else : ?>	
 				  <input type="text" required name="multi_products" id="multi_products" class="select_product">
+			  	<?php endif; ?>
+				</div>
+			</fieldset>
+			
+
+			<fieldset data-name="status" data-required="1"  data-type="text" class="fieldset-status">
+				<label for="status">Invoice Status <span class="wpaam-required-star">*</span></label>
+				<div class="field required-field ui-widget">
+				  <input type="text" required name="status" id="status" value="<?php if ( !empty($status) ) echo $status;?>">
 				</div>
 			</fieldset>
 
@@ -71,7 +87,7 @@
 			<p class="wpaam-submit">
 				<input type="hidden" name="wpaam_submit_form" value="<?php echo $form; ?>" />
 				<input type="hidden" name="wpaam_user_id" id="wpaam_user_id" value="<?php echo $author_id; ?>" />
-				<?php if(isset($_GET['quotation_id']) && $_GET['quotation_id'] != '') : ?>
+				<?php if(isset($_GET['invoice_id']) && $_GET['invoice_id'] != '') : ?>
 				<input type="submit" id="submit_wpaam_invoices" name="submit_wpaam_invoices" class="button" value="<?php  _e( 'Update Quotation', 'wpaam' ); ?>" />
 				<?php else :?>
 				<input type="submit" id="submit_wpaam_invoices" name="submit_wpaam_invoices" class="button" value="<?php _e( 'Add Quotation', 'wpaam' ); ?>" />

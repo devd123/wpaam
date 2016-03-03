@@ -33,7 +33,7 @@ function wpaam_install() {
 	}
 	
 	// Install default pages
-	wpaam_generate_pages();
+	//wpaam_generate_pages();
 	// Setup default emails content
 	$default_emails = array();
 
