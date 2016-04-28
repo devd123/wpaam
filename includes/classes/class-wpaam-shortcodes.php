@@ -211,7 +211,7 @@ class WPAAM_Shortcodes {
 		$all_tabs = array_keys( wpaam_get_account_page_tabs() );
 
 		// Display template
-		if ( is_user_logged_in() ) :
+		if ( is_user_logged_in()) :
 
 			get_wpaam_template( 'account.php',
 				array(
@@ -221,7 +221,6 @@ class WPAAM_Shortcodes {
 					'all_tabs'    => $all_tabs
 				)
 			);
-	
 		// Show login form if not logged in
 		else :
 

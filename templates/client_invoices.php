@@ -19,7 +19,18 @@
 		global $wpdb;
 		$author = get_current_user_id();  
 		$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-		$args = array('post_type' => 'aam-invoice' , 'posts_per_page' => 10 , 'paged' => $paged);
+		$args = array(
+			'post_type' => 'aam-invoice',  
+			'posts_per_page' => 10, 
+			'paged' => $paged,
+			'meta_query' => array(
+			       	array(
+			           'key' => 'client',
+			           'value' => $user_id,
+			           'compare' => '=',
+			        ),
+   				),
+			);
 		$query = new WP_Query( $args);
 		if ( $query->have_posts() ) : 
 			$number = 1;

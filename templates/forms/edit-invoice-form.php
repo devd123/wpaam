@@ -62,7 +62,7 @@
 				<?php if(isset( $_GET['invoice_id']) && !empty($_GET['invoice_id']) ) : ?>
 					<input type="text" value="<?php if ( !empty($products) ) echo $products;?>" disabled>
 				<?php else : ?>	
-				  <input type="text" required name="multi_products" id="multi_products" class="select_product">
+				  <input type="text" required name="multi_products" id="multi_products" class="select_product" autocomplete="off">
 			  	<?php endif; ?>
 				</div>
 			</fieldset>

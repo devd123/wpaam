@@ -214,8 +214,9 @@ class WPAAM_Form_Profile extends WPAAM_Form {
 		$all_tabs = array_keys( wpaam_get_account_page_tabs() );
 
 		
+
 		// Display template
-		if( is_user_logged_in() ) :
+		if( is_user_logged_in() && current_user_can( 'create_users' ) ) :
 
 			if( isset( $_POST['submit_wpaam_profile'] ) ) {
 				// Show errors from fields
@@ -223,7 +224,6 @@ class WPAAM_Form_Profile extends WPAAM_Form {
 				// Show confirmation messages
 				self::show_confirmations();
 			}
-
 
 			get_wpaam_template( 'forms/account-form.php',
 				array(
@@ -235,6 +235,17 @@ class WPAAM_Form_Profile extends WPAAM_Form {
 				)
 			);
 
+		elseif(is_user_logged_in() && current_user_can('aam_client')) :
+		 	
+		 	get_wpaam_template( 'client_account.php',
+				array(
+					'atts'        => $atts,
+					'form'        => self::$form_name,
+					'user_id'     => self::$user->ID,
+					'current_tab' => $current_account_tab,
+					'all_tabs'    => $all_tabs
+				)
+			);
 		// Show login form if not logged in
 		else :
 

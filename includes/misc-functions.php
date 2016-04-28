@@ -734,23 +734,34 @@ function wpaam_generate_pages( $redirect = false ) {
 function wpaam_get_account_page_tabs() {
 
 	$tabs = array();
-
-	$tabs['details'] = array(
+	if(current_user_can('aam_client') || current_user_can('subscriber')) :
+		$tabs['details'] = array(
+			'id'    => 'details',
+			'title' => __('Profile', 'wpaam'),
+		);
+		$tabs['change-password'] = array(
+			'id'    => 'change-password',
+			'title' => __('Change Password', 'wpaam'),
+		);
+	else :
+		$tabs['details'] = array(
 		'id'    => 'details',
 		'title' => __('Profile', 'wpaam'),
-	);
-	$tabs['change-password'] = array(
-		'id'    => 'change-password',
-		'title' => __('Change Password', 'wpaam'),
-	);
-	$tabs['payments'] = array(
+		);
+		$tabs['change-password'] = array(
+			'id'    => 'change-password',
+			'title' => __('Change Password', 'wpaam'),
+		);
+		$tabs['payments'] = array(
 		'id'    => 'payments',
 		'title' => __('Payments & Tax', 'wpaam'),
-	);
-	$tabs['others'] = array(
-		'id'    => 'others',
-		'title' => __('Other', 'wpaam'),
-	);
+		);
+		$tabs['others'] = array(
+			'id'    => 'others',
+			'title' => __('Other', 'wpaam'),
+		);
+
+	endif;
 
 	return apply_filters( 'wpaam_get_account_page_tabs', $tabs );
 

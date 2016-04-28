@@ -5,6 +5,10 @@
  */
 ?>
 	<div id="dialog_box" title="Quotation Preview"></div>
+	<form method="get" id="sul-searchform" action="<?php the_permalink() ?>">
+		<p align="right"><input type="text" class="search field" name="as" id="aam-s" style="width:25% ! important" />
+		<input type="submit" class="submit" name="submit" id="aam-searchsubmit" value="Submit" /></p>
+	</form>
 	<table class="wp-list-table" colspam="">
   		<thead>
 	  		<th>Number</th>
@@ -20,7 +24,7 @@
 		global $wpdb;
 		$author = get_current_user_id();  
 		$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-		$args = array('post_type' => 'aam-quotation' , 'author' => $author , 'posts_per_page' => 50 , 'paged' => $paged);
+		$args = array('post_type' => 'aam-quotation' , 'author' => $author , 'posts_per_page' => 10 , 'paged' => $paged);
 		$query = new WP_Query( $args);
 		if ( $query->have_posts() ) : 
 			$number = 1;
@@ -43,6 +47,7 @@
 				   <a class="qt_preview" href="javascript:void()" qid="<?php echo get_the_ID();?>">Preview</a>
 			    </td> 
 			    <td><a href="javascript:void()" class="button" id="quotation_copy" data-id="<?php echo get_the_ID();?>">Invoice</td>
+			    <td><a href="javascript:void()" class="button" id="" data-id="<?php echo get_the_ID();?>">Send Quotation</td>
 			    
 	      	<?php $number++;  ?>
 		   </tr>

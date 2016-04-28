@@ -237,4 +237,4 @@ class WPAAM_Getting_Started {
 
 }
 
-new wpaam_Getting_Started();
+new WPAAM_Getting_Started();

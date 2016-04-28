@@ -71,7 +71,7 @@
 		 	<fieldset data-name="multi_products" data-required="1"  data-type="text" class="fieldset-multi_products">
 				<label for="multi_products">Products <span class="wpaam-required-star">*</span></label>
 				<div class="field required-field ui-widget">
-				  <input type="text" required name="multi_products" id="multi_products" class="select_product" value="<?php if ( !empty($products) ) echo $products;?>">
+				  <input type="text" required name="multi_products" id="multi_products" class="select_product" value="<?php if ( !empty($products) ) echo $products;?>" autocomplete="off">
 				</div>
 			</fieldset>
 

@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Advance Accountability Manager
+Plugin Name: Advance User Manager
 Plugin URI:  https://neerusite.wordpress.com/
 Description: This plugin is developed for user accountablility management with their respective cleints
 Author:      Neeru Sharma
